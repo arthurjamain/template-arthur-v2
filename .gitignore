@@ -1,0 +1,9 @@
+originalData.json
+www/medias/*
+www/formattedData.json
+www/img/*.pxm
+www/data.json
+secret.xcodeproj/project.xcworkspace/xcuserdata/
+.DS_Store*
+www/img/mosaicjpg/
+www/img/mosaicpng/

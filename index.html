@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Project</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/tap.js"></script>
+    <script src="cordova-1.7.0.js"></script>
+    <script data-joshfire-bootstrap
+     src="http://factory.joshfire.com/bootstrap/4f9aba6e1e4daf01000014d9/auto/desktop/"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div id="lockscreen">
+        <form action="#" method="post" id="codeform">
+          <input type="submit" id="unlock" name="unlock" value="Unlock">
+        </form>
+      </div>
+      <div id="config">
+        <div style="overflow:hidden">
+          <button class="back button">Back to lockscreen</button>
+          <div id="update-info" class="frame">
+            <h1>Financial Commitment Parameters</h1>
+            <div id="deal-content">
+              <div id="config-tab-1" class="config-tab">
+                <div class="keyvalue">
+                  <label for="config-form-input">Field 1 :</label><br />
+                  <textarea></textarea>
+                  <input name="inputname" type="text" class="config-form-input">
+                  <a class="remove" href="#">Remove this field</a>
+                </div>
+                <div class="keyvalue">
+                  <label for="config-form-input">Field 2 :</label><br />
+                  <textarea></textarea>
+                  <input name="inputname" type="text" class="config-form-input">
+                  <a class="remove" href="#">Remove this field</a>
+                </div>
+                <a class="addmore" href="#">Add a field</a>
+                <label for="description">Description:</label><br />
+                <textarea class="description"></textarea>
+                <button class="save button">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="app">
+        <section id="sidebar">
+          <header>
+            <a href="#/view" class="back"></a>
+            <h2></h2>
+            <a href="#/view" class="curChapter"><h3></h3></a>
+          </header>
+          <div class="list"></div>
+        </section>
+        <section id="content"></section>
+      </div>
+    </div>
+    <script data-main="app" src="joshfire-framework/lib/adapters/ios/bootstrap.js"></script>
+  </body>
+</html>
