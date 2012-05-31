@@ -134,11 +134,11 @@ function($, _, views) {
         from = 'baway';
         to = 'taway';
       }
-      this.contentPanes[id].$el.attr('class', 'notransition').addClass(from);
+      this.contentPanes[id].$el.attr('class', 'anim2 notransition '+from).addClass(from);
       this.contentPanes[id].$el.show();
       
       setTimeout(function() {
-        $prevSlide.attr('class', to+' shown').removeClass('shown');
+        $prevSlide.attr('class', to+' shown anim2').removeClass('shown');
         self.contentPanes[id].$el.removeClass('notransition').addClass('shown');
       }, 10);
 
@@ -166,20 +166,20 @@ function($, _, views) {
       //$('div', self.staticViews.app.sidebar.$el).hide();
       //$('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).hide();
 
-      
       this.staticViews.app.sidebar.$el.removeClass('visible');
       this.staticViews.app.content.$el.removeClass('shrinked');
       
-      setTimeout(function() {
+      //setTimeout(function() {
         //$('div', self.staticViews.app.sidebar.$el).show();
-        $('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).show();
-      }, 0);
+        //$('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).show();
+      //}, 0);
       
       setTimeout(function() {
-        $('#contentRoot').show();
+        $('#content').css({'width': '100%'});
+        //$('#contentRoot').show();
         if(typeof cb != 'undefined')
           cb();
-      }, 500);
+      }, 400);
     },
     setRegularLayout: function() {
       var self = this;
@@ -189,7 +189,8 @@ function($, _, views) {
       
       this.staticViews.app.sidebar.$el.addClass('visible');
       this.staticViews.app.content.$el.addClass('shrinked');
-      
+      var totalwidth = $(window).width() - 237;
+      $('#content').css({'width': totalwidth})
       setTimeout(function() {
         //$('div', self.staticViews.app.sidebar.$el).show();
         $('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).show();

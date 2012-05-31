@@ -4,8 +4,9 @@ define([
   'joshlib!uielement',
   'joshlib!ui/item',
   'joshlib!view',
-  'joshlib!ui/list'],
-function($, _, UIelement, UIItem, View, List) {
+  'joshlib!ui/list',
+  'joshlib!ui/factorymedia'],
+function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
   var views = {
     /**
@@ -59,13 +60,17 @@ function($, _, UIelement, UIItem, View, List) {
       $el: $('#content')
     }),
 
-    // A Blogpost elemnt container
+    // A generic elemnt container
     mysteryPane: View.extend({
 
       el: '<div></div>',
       $el: null,
       child: null,
       backButton: '<button class="back">back</button>',
+      mediaTypes : [
+        'MusicRecording',
+        'VideoObject'
+      ],
 
       events: {
         //'click .back': 'goBack'
@@ -78,12 +83,53 @@ function($, _, UIelement, UIItem, View, List) {
         self.$el.attr('class', opt.paneOptions.classes);
         self.$el.hide();
         $('#'+opt.paneOptions.container).append(self.$el);
-
-        self.child = new views.mysteryBlogPost({
-          model: opt.data,
-          opt: opt.paneOptions,
-          $parent: self.$el
-        });
+        console.log(opt.data);
+        if(opt.data.get('@type') == 'VideoObject') {
+          self.child = new FactoryMedia({
+              model: opt.data,
+              width: 736,
+              height: 460,
+              scroller: true,
+              scrollerSelector: '.scroll-wrapper',
+              templateEl: '#media-template',
+              mediaOptions: {
+                strategy: 'html5',
+                width: '100%',
+                height: '100%',
+                adjustSize: true
+              },
+              el: self.$el[0]
+          });
+        }
+        else if(opt.data.get('@type') == 'MusicRecording') {
+          self.child = new FactoryMedia({
+              model: opt.data,
+              scroller: true,
+              scrollerSelector: '.scroll-wrapper',
+              templateEl: '#media-template',
+              mediaOptions: {
+                strategy: 'html5',
+                adjustSize: true,
+                autoPlay: true
+              },
+              el: self.$el[0]
+          });
+        }
+        else if(opt.data.get('@type') == 'ImageObject') {
+          self.child = new views.mysteryImage({
+            model: opt.data,
+            opt: opt.paneOptions,
+            $parent: self.$el
+          });
+        }
+        else {
+          self.child = new views.mysteryBlogPost({
+            model: opt.data,
+            opt: opt.paneOptions,
+            $parent: self.$el
+          });
+        }
+        
         self.child.render();
 
         if(opt.paneOptions.backButton) {
@@ -101,6 +147,52 @@ function($, _, UIelement, UIItem, View, List) {
       }
 
     }),
+
+    mysteryImage: View.extend({
+
+      el: '<div class="mysteryImage"></div>',
+      $el: null,
+      template: $('#image-template').html(),
+      $parent: null,
+      theScroller: null,
+
+      initialize: function(opt) {
+        var self = this;
+
+        this.$parent = opt.$parent;
+        this.$el = $(this.el);
+        this.scrollable = opt.opt.scrollable;
+      },
+
+      generate: function(cb) {
+        var self = this;
+        cb(null, _.template(self.template, {item: self.model.toJSON()}));
+      },
+
+      setContent: function(html) {
+        var self = this;
+        var $html = $(html);
+        $('img', $html).hide();
+        self.$el.append(html);
+        self.$parent.append(self.$el);
+
+        /*
+        if(self.scrollable) {
+          if(!self.theScroller) {
+            self.theScroller = new iScroll('scroll-'+self.model.get('guid'), {
+              hScroll: false,
+              scrollbarClass: 'contentScroll'
+            });
+          }
+          setTimeout(function() {
+            self.theScroller.refresh();
+          }, 800);
+        }
+        */
+      }
+
+    }),
+
     // A blogpost element
     mysteryBlogPost: View.extend({
       el: '<div class="blogPost"></div>',
@@ -122,14 +214,13 @@ function($, _, UIelement, UIItem, View, List) {
         this.$el = $(this.el);
         this.scrollable = opt.opt.scrollable;
 
+        // Fix weird values sent by google ...
+        if(this.model.get('articleBody'))
+          this.model.set({articleBody: this.model.get('articleBody').replace('src="//', 'src="http://')});
+
         // Add the title
         if (opt.opt.title) {
           // Trim preceding number
-          var tmp = opt.opt.title.split('-');
-          if(tmp.length > 1) {
-            tmp.shift();
-            opt.opt.title = tmp.join('-');
-          }
           if(opt.opt.titleType == 'small') {
             self.titleEl = _.template(this.rubricTitleTemplate, {title: opt.opt.title});
           }
@@ -321,8 +412,7 @@ function($, _, UIelement, UIItem, View, List) {
         self.$el.addClass('anim2');
         $('#introtext').remove();
         setTimeout(function() {
-          self.$el.removeClass('anim').removeClass('anim2');
-          $('.video-corp').show();
+          //self.$el.removeClass('anim').removeClass('anim2');
         }, 2500);
       }
     }),

@@ -76,7 +76,6 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
         this.set({'guid': this.cid});
         this._find = data.find;
         // Set its absolute path property
-        console.log(data.path);
         this.set({path: data.path + '/' + this.get('guid')});
         // Load the first elements
         if(typeof this._find == 'function') {

@@ -42,11 +42,6 @@ function(Router, dataManager, uiManager, views, onReady) {
               tree.addBranch(tabs.children[k]);
             }
           }
-          if (typeof cordova.exec == 'function') {
-            setTimeout(function(){
-              cordova.exec(null, null, "SplashScreen", "hide", []);
-            }, 500);
-          }
         });
       });
     },

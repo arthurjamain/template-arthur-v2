@@ -10,8 +10,8 @@ textarea {
 }
 html,
 body {
-  width: 1024px;
-  height: 768px;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -28,6 +28,17 @@ ol, ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+blockquote {
+  background: #EEE;
+  font-weight: 12px;
+  font-size: 14px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.2);
+  color: #333;
+  text-shadow: 0 1px #FFF;
 }
 
 .button {
@@ -166,18 +177,18 @@ ol, ul {
   overflow: hidden;
   position: absolute;
   z-index: 30;
-  width: 1024px;
+  width: 100%;
   height: 100%;
   left: 0;
   -webkit-transition-property: -webkit-transform;
-  -webkit-transition-duration: 0.4s;
+  -webkit-transition-duration: 0.5s;
   -webkit-transition-timing-function: ease-in-out;
   -webkit-transform: translate3d(0, 0, 0);
 }
 
 #content.shrinked {
   -webkit-transition-property: -webkit-transform;
-  -webkit-transition-duration: 0.4s;
+  -webkit-transition-duration: 0.5s;
   -webkit-transition-timing-function: ease-in-out;
   -webkit-transform: translate3d(287px, 0, 0);
   width: 737px;
@@ -196,7 +207,6 @@ ol, ul {
   box-shadow: -3px 0px 5px rgba(0, 0, 0, 0.4);
   background-image: -webkit-linear-gradient(left , rgb(240,240,244) 29%, rgb(255,255,255) 65%);
   background-image: linear-gradient(left , rgb(240,240,244) 29%, rgb(255,255,255) 65%);
-  height: 75px;
   line-height: 37px;
   overflow: hidden;
 }
@@ -240,7 +250,7 @@ ol, ul {
 #content .description {}
 
 #content article {
-  padding: 0 45px 45px 75px;
+  padding: 0 45px 200px 45px;
   line-height: 22px;
 }
 
@@ -251,15 +261,16 @@ ol, ul {
   max-width: 620px;
 }
 
-#content article ul {
+#content article ul, #content article ol {
   list-style: decimal;
+  padding-left: 25px;
 }
 
 #content article li {
   padding: 5px;
 }
 
-#content article li ul {
+#content article li ul, #content article li ol{
   padding-left: 20px;
   font-size: 14px;
   list-style: none;
@@ -269,7 +280,7 @@ ol, ul {
   width: 100%;
 }
 
-#content .listPane ul {
+#content .listPane ul, #content .listPane ol {
   margin: 0 50px;
   border-bottom: 1px solid #DCDCDC;
 }
@@ -311,23 +322,32 @@ ol, ul {
 
 #content .blogPost {
   height: 100%;
-  width: 738px;
+  width: 100%;
   position: absolute;
 }
 
-#content .blogPost .blogpaneInnerContainer {
-  position: absolute;
-  top: 146px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding-top: 50px;
+#content .mysteryImage {
+
+}
+
+#content .innerContainer {
+  padding: 50px;
+  height: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 
-#content .blogPost .blogpaneInnerContainer > * {
+#content .innerContainer > * {
   -webkit-transform: translate3d(0, 0, 0);
+}
+
+#content .innerContainer img {
+  max-width: 100%;
+  max-height: 45%;
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 #content .blogPost .video-link {
@@ -469,7 +489,7 @@ ol, ul {
   z-index: 50;
   width: 287px;
   -webkit-transform: translate3d(-287px, 0, 0);
-  -webkit-transition: -webkit-transform 0.4s ease-in-out;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
 }
 
 #sidebar * {
@@ -477,7 +497,7 @@ ol, ul {
 }
 
 #sidebar.visible {
-  -webkit-transition: -webkit-transform 0.4s ease-in-out;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
   -webkit-transform: translate3d(0, 0, 0);
 }
 
@@ -586,18 +606,16 @@ ol, ul {
   border-left: 1px solid #FFF;
   padding: 10px 0 10px 20px;
   font-size: 19px;
-  width: 185px;
+  width: 160px;
   height: 50px;
   line-height: 25px;
   vertical-align: middle;
   display: table-cell;
+  word-break: break-all;
 }
 
 #sidebar .list .count {
   position: relative;
-  top: 0;
-  left: 0;
-  width: 25px;
   height: 100%;
   padding-left: 10px;
   font-weight: bold;
@@ -610,7 +628,7 @@ ol, ul {
 #sidebar .list .count p {
   color: #FFF;
   margin: 0;
-  width: 36px;
+  min-width: 36px;
 }
 
 .frame {
@@ -793,6 +811,7 @@ ol, ul {
 #contentRoot .listpaneInnerContainer {
   top: 0;
   overflow: visible;
+  width: 100%;
 }
 
 #contentRoot h3 {
@@ -818,23 +837,25 @@ ol, ul {
   margin: 0 !important;
   border: 0 !important;
   padding: 0 !important;
-  width: 1024px;
-  height: 768px;
+  width: 100%;
+  height: 100%;
   background: url('../img/mosaic.png') no-repeat;
   background-size: 100% 100%;
 }
 
-#contentRoot #tableofcontent li,
-.video-corp {
+#contentRoot .listPane {
+  height: 100%;
+}
+
+#contentRoot #tableofcontent li{
   position: absolute;
-  width: 205px !important;
-  height: 192px;
+  width: 20% !important;
+  height: 25%;
   margin: 0;
   padding: 0;
   border: 0;
   background: rgba(0, 0, 0, 0.8);
   display: table;
-  -webkit-transform: translate3d(0, 0, 0);
   overflow: hidden;
 }
 
@@ -869,6 +890,67 @@ ol, ul {
 #contentRoot #tableofcontent li/*:not(:first-child)*/ h3:first-line {
   font-weight: normal;
   color: #CB9A04;
+}
+
+#content .mediacontainer audio {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+#content .mediacontainer iframe {
+  margin: 0 auto;
+  display: block;
+}
+
+#content article section {
+  background: #EEE;
+  font-weight: 12px;
+  font-size: 14px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.2);
+  color: #333;
+  text-shadow: 0 1px #FFF;
+  width: 80%;
+  margin: 0px auto;
+  border-top: 1px solid #FFF;
+
+}
+
+#content article header {
+  padding: 8px 15px 10px;
+  width: 80%;
+  margin: 0 auto;
+  background: #444;
+  margin-bottom: -5px;
+  margin-top: 50px;
+  border-radius: 5px;
+  box-shadow: 0 -2px 0px rgba(0, 0, 0, 0.1);
+  height: 38px;
+  overflow: hidden;
+  color: #EEE;
+}
+
+#content article header a {
+  color: #EEE;
+}
+
+#content article header img {
+  display: block;
+  float: left;
+  box-shadow: 0 1px 1px 0px rgba(255, 255, 255, 0.6);
+  border-top: 1px solid #000;
+  border-radius: 3px;
+}
+
+#content article header .author, #content article header .date {
+  display: block;
+  float: left;
+  line-height: 16px;
+  height: 16px;
+  padding-left: 10px;
+  font-size: 12px;
 }
 
 #content .back {
@@ -942,65 +1024,61 @@ ol, ul {
 
 #tableofcontent li:nth-child(1) {
   top: 0px;
-  left: 205px;
+  left: 20%;
   z-index: 39;
 }
 
 #tableofcontent li:nth-child(2) {
   top: 0px;
-  left: 820px;
+  left: 80%;
   z-index: 38;
 }
 
 #tableofcontent li:nth-child(3) {
-  top: 192px;
+  top: 25%;
   left: 0px;
   z-index: 37;
 }
 
 #tableofcontent li:nth-child(4) {
-  top: 192px;
-  left: 410px;
+  top: 25%;
+  left: 40%;
   z-index: 36;
 }
 
 #tableofcontent li:nth-child(5) {
-  top: 384px;
-  left: 205px;
+  top: 50%;
+  left: 20%;
   z-index: 35;
 }
 
 #tableofcontent li:nth-child(6) {
-  top: 384px;
-  left: 615px;
+  top: 50%;
+  left: 60%;
   z-index: 34;
 }
 
 #tableofcontent li:nth-child(7) {
-  top: 576px;
+  top: 75%;
   left: 0px;
   z-index: 33;
 }
 
 #tableofcontent li:nth-child(8) {
-  top: 576px;
-  left: 410px;
+  top: 75%;
+  left: 40%;
   z-index: 32;
 }
 
-.video-corp {
-  top: 576px;
-  left: 820px;
-  z-index: 30;
-}
-
-.video-corp a {
-  text-decoration: none;
+#tableofcontent li:nth-child(9) {
+  top: 75%;
+  left: 80%;
+  z-index: 32;
 }
 
 .anim #tableofcontent li {
-  top: 192px;
-  left: 410px;
+  top: 25%;
+  left: 40%;
   background: #000;
 }
 
@@ -1016,30 +1094,14 @@ ol, ul {
 }
 @-webkit-keyframes move1 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
     top: 0px;
-    left: 205px;
-  }
-}
-
-.anim2 #tableofcontent li:nth-child(1) {
-  -webkit-animation-name: move1;
-}
-@-webkit-keyframes move1 {
-  from {
-    top: 192px;
-    left: 410px;
-  }
-
-  to {
-    background: rgba(0, 0, 0, 0.8);
-    top: 0px;
-    left: 205px;
+    left: 20%;
   }
 }
 
@@ -1048,14 +1110,14 @@ ol, ul {
 }
 @-webkit-keyframes move2 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
     top: 0px;
-    left: 820px;
+    left: 80%;
   }
 }
 
@@ -1064,13 +1126,13 @@ ol, ul {
 }
 @-webkit-keyframes move3 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
-    top: 192px;
+    top: 25%;
     left: 0px;
   }
 }
@@ -1080,14 +1142,14 @@ ol, ul {
 }
 @-webkit-keyframes move4 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 }
 
@@ -1096,14 +1158,14 @@ ol, ul {
 }
 @-webkit-keyframes move5 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
-    top: 384px;
-    left: 205px;
+    top: 50%;
+    left: 20%;
   }
 }
 
@@ -1112,14 +1174,14 @@ ol, ul {
 }
 @-webkit-keyframes move6 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
-    top: 384px;
-    left: 615px;
+    top: 50%;
+    left: 60%;
   }
 }
 
@@ -1128,13 +1190,13 @@ ol, ul {
 }
 @-webkit-keyframes move7 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
-    top: 576px;
+    top: 75%;
     left: 0px;
   }
 }
@@ -1144,14 +1206,30 @@ ol, ul {
 }
 @-webkit-keyframes move8 {
   from {
-    top: 192px;
-    left: 410px;
+    top: 25%;
+    left: 40%;
   }
 
   to {
     background: rgba(0, 0, 0, 0.8);
-    top: 576px;
-    left: 410px;
+    top: 75%;
+    left: 40%;
+  }
+}
+
+.anim2 #tableofcontent li:nth-child(9) {
+  -webkit-animation-name: move9;
+}
+@-webkit-keyframes move9 {
+  from {
+    top: 25%;
+    left: 40%;
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0.8);
+    top: 75%;
+    left: 80%;
   }
 }
 
@@ -1197,30 +1275,6 @@ ol, ul {
   z-index: 5;
   background: url('http://placehold.it/190x200') no-repeat 233px 234px;
   background-size: 190px 200px;
-}
-
-#intropicture {
-  width: 492px;
-  height: 361px;
-  margin: -43px 0 0 -300px;
-  opacity: 0;
-  background: url('../img/presidents_cup.jpeg') no-repeat 0 0;
-  -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(rgba(255, 255, 255, 0.4)));
-}
-
-#introtext {
-  /*outline: 1px solid red;*/
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1024px;
-  height: 768px;
-  font-size: 20px;
-  color: #fff;
-  opacity: 0;
-  background: #000;
-  z-index: 50;
-  /**-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(255, 255, 255, 0.4)));**/
 }
 
 /*------------------------

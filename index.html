@@ -6,45 +6,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/tap.js"></script>
-    <script src="cordova-1.7.0.js"></script>
     <script data-joshfire-bootstrap
      src="http://factory.joshfire.com/bootstrap/4f9aba6e1e4daf01000014d9/auto/desktop/"></script>
   </head>
   <body>
     <div id="root">
-      <div id="lockscreen">
-        <form action="#" method="post" id="codeform">
-          <input type="submit" id="unlock" name="unlock" value="Unlock">
-        </form>
-      </div>
-      <div id="config">
-        <div style="overflow:hidden">
-          <button class="back button">Back to lockscreen</button>
-          <div id="update-info" class="frame">
-            <h1>Financial Commitment Parameters</h1>
-            <div id="deal-content">
-              <div id="config-tab-1" class="config-tab">
-                <div class="keyvalue">
-                  <label for="config-form-input">Field 1 :</label><br />
-                  <textarea></textarea>
-                  <input name="inputname" type="text" class="config-form-input">
-                  <a class="remove" href="#">Remove this field</a>
-                </div>
-                <div class="keyvalue">
-                  <label for="config-form-input">Field 2 :</label><br />
-                  <textarea></textarea>
-                  <input name="inputname" type="text" class="config-form-input">
-                  <a class="remove" href="#">Remove this field</a>
-                </div>
-                <a class="addmore" href="#">Add a field</a>
-                <label for="description">Description:</label><br />
-                <textarea class="description"></textarea>
-                <button class="save button">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div id="app">
         <section id="sidebar">
           <header>
@@ -57,6 +23,78 @@
         <section id="content"></section>
       </div>
     </div>
-    <script data-main="app" src="joshfire-framework/lib/adapters/ios/bootstrap.js"></script>
+    <script data-main="app" src="js/joshfire-framework/lib/adapters/ios/bootstrap.js"></script>
+
+    <!-- Templates -->
+    <script type="text/template" id="media-template">
+      <div class="mediacontainer">
+        <h4><%=item.name%></h4>
+        <div class="themedia">
+          <%=media.html%>
+          <div class="scroll-wrapper">
+            <article>
+              <% if(item.author) { %>
+                <% if(item.author.length)
+                  theauthor = item.author.pop();
+                  %>
+                <header>
+                  <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
+                    <img src="<%=item.author.thumbnail[0].contentURL%>" alt="Author's picture" />
+                  <% } %>
+                  <% if(theauthor.url) { %>
+                    <span class="author">By <a href="<%=item.author.url%>"><%=theauthor.name%></a></span>
+                  <% } else { %>
+                    <span class="author">By <%=theauthor.name%></span>
+                  <% } %>
+                  <%
+                    thedate = item.dateCreated || item.datePublished || item.dateAdded; 
+                   if(thedate) { %>
+                    <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+                  <% } %>
+                </header>
+              <% } %>
+              <section>
+                <%=item.description%>
+              </section>
+            </article>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="image-template">
+      <div class="imagecontainer">
+        <h4><%=item.name%></h4>
+        <div class="imagepaneInnerContainer innerContainer">
+            <img src="<%=item.contentURL%>"/>
+            <article>
+              <% if(item.author) { %>
+                <% if(item.author.length)
+                  theauthor = item.author.pop();
+                  %>
+                <header>
+                  <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
+                    <img src="<%=theauthor.thumbnail[0].contentURL%>" alt="Author's picture" />
+                  <% } %>
+                  <% if(theauthor.url) { %>
+                    <span class="author">By <a href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
+                  <% } else { %>
+                    <span class="author">By <%=theauthor.name%></span>
+                  <% } %>
+                  <%
+                    thedate = item.dateCreated || item.datePublished; 
+                    if(thedate) { %>
+                    <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+                  <% } %>
+                </header>
+              <% } %>
+              <section>
+                <%=item.description%>
+              </section>
+            </article>
+        </div>
+      </div>
+    </script>
+
   </body>
 </html>
