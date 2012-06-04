@@ -72,13 +72,8 @@
               "items": [
                 {
                   "type": "optionfieldset",
-                  "legend": "{{idx}}. {{value}}",
+                  "legend": "salut",
                   "items": [
-                    {
-                      "key": "tabs[]",
-                      "valueInLegend": true,
-                      "value": "New Tab"
-                    },
                     {
                       "title": "Tab data source",
                       "description": "Any type of datasources accepted.",
