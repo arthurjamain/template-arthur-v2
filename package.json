@@ -67,19 +67,19 @@
         },
         {
           "type": "fieldset",
-          "legend": "Application Tabs",
+          "legend": "Tabs",
           "items": [
             {
               "type": "tabarray",
               "items": [
                 {
-                  "type": "section",
-                  "legend": "{{value}}",
+                  "type": "optionfieldset",
+                  "legend": "{{idx}}. {{value}}",
                   "items": [
                     {
                       "key": "tabs[]",
                       "valueInLegend": true,
-                      "value": "Tab {{idx}}"
+                      "value": "New Tab"
                     },
                     {
                       "title": "Tab data source",
