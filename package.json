@@ -67,7 +67,7 @@
         },
         {
           "type": "fieldset",
-          "legend": "Tabs",
+          "legend": "Application Tabs",
           "items": [
             {
               "type": "tabarray",
