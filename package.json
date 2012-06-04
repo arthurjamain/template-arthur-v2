@@ -46,7 +46,7 @@
           "type": "string"
         },
         "tabs": {
-          "title": "Tabs titles",
+          "title": "tabs",
           "type": "array",
           "items": [
             {
