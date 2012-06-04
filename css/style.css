@@ -344,6 +344,14 @@ blockquote {
 
 }
 
+.mediaInnerContainer .loader {
+   width: 100%;
+   position: absolute;
+   top: 50px!important;
+   background: #F8F6F4 url(../img/spinner.gif) no-repeat center center!important;
+   z-index: 100!important;
+}
+
 #content .loader {
   display: block;
   background: transparent url(../img/spinner.gif) no-repeat center center;

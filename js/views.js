@@ -133,9 +133,16 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           var thevideo = $('iframe', self.$el).clone();
           $('.maincontent').css({height: thevideo.attr('height')+'px'});
           $('iframe', self.$el).remove();
+          $('.maincontent', self.$el).append('<div style="height:'+thevideo.attr('height')+'px;" class="loader"></div>');
+            
           setTimeout(function() {
             thevideo.attr('width', $('#content').width() - 100);
             $('.maincontent', self.$el).append(thevideo);
+            $('iframe', self.$el).on('load', function() {
+              $('.maincontent .loader', self.$el).anim({opacity: 0}, 0.6, 'linear', function() {
+                $(this).remove();
+              });
+            });
           }, 800);
         }
 
@@ -221,14 +228,13 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
         // Fix weird values sent by google ...
         if(this.model.get('articleBody')) {
-          this.model.set({articleBody: this.model.get('articleBody').replace('src="//', 'src="http://')});
-          this.model.set({articleBody: this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="')});
-          console.log(this.model.get('articleBody'));
+          this.model.attributes.articleBody = this.model.get('articleBody').replace('src="//', 'src="http://');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="');
         }
 
         // Add the title
         if (opt.opt.title) {
-          // Trim preceding number
+
           if(opt.opt.titleType == 'small') {
             self.titleEl = _.template(this.rubricTitleTemplate, {title: opt.opt.title});
           }
@@ -339,14 +345,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         self.child.render();
         // Hide the list at first
         $('#'+opt.paneOptions.listId).hide();
-        $('.video-corp').hide();
-
-        $('.video-corp a').on('touchend', function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          window.popup.setVideo('medias/corpo/1m30.mp4');
-          return false;
-        });
       },
 
       showAnimated: function() {
@@ -465,6 +463,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
       // setContent is called by render(). It sets the content ...
       setContent: function(html) {
+
         $('ul', this.itemOptions.$parent).remove();
         var self = this,
             $html = $(html),
@@ -488,7 +487,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
               if(i == modulo) {
                 // Manually triger enhance once again to add
                 // handlers on the more recent links.
-                //console.log("k");
                 self.enhance();
                 clearInterval(interval);
                 return;
@@ -498,9 +496,11 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           }, 800);
         }
 
-        theopt.$parent.append($html);
-        $('ul', theopt.$parent).attr('id', theopt.listId || '');
-        $('ul', theopt.$parent).attr('class', theopt.listClasses || '');
+        setTimeout(function() {
+          theopt.$parent.append($html);
+          $('ul', theopt.$parent).attr('id', theopt.listId || '');
+          $('ul', theopt.$parent).attr('class', theopt.listClasses || '');
+        }, 100);
 
       },
 
@@ -518,7 +518,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
       taphandle: function(e) {
         var thelink = e.target;
-
         while(!thelink.href) {
           thelink = thelink.parentElement;
         }

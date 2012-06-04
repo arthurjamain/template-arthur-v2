@@ -136,7 +136,7 @@ function(Router, dataManager, uiManager, views, onReady) {
         Backbone.history.navigate('/view', true);
         return;
       }
-      
+
       //Get the right data
       var rootModel = dataManager.getDataFromPath(sidebarid);
 
@@ -218,7 +218,7 @@ function(Router, dataManager, uiManager, views, onReady) {
           showDescription: true,
           scrollable: true
         });
-
+        
         uiManager.setSelectedSidebarItem(rootModel.get('guid'));
 
         // Get index of item in collection
