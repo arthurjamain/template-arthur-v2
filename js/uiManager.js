@@ -134,25 +134,22 @@ function($, _, views) {
         from = 'baway';
         to = 'taway';
       }
-      this.contentPanes[id].$el.attr('class', 'anim2 notransition '+from).addClass(from);
+      this.contentPanes[id].$el.attr('class', 'notransition '+from).addClass(from);
       this.contentPanes[id].$el.show();
       
-      setTimeout(function() {
-        $prevSlide.attr('class', to+' shown anim2').removeClass('shown');
-        self.contentPanes[id].$el.removeClass('notransition').addClass('shown');
-      }, 10);
-
+      $prevSlide.attr('class', to+' shown').removeClass('shown');
+      self.contentPanes[id].$el.removeClass('notransition').addClass('shown');
+      
       //Sadly, no other way to have a "callback" after CSS3 transitions
       setTimeout(function() {
         // Delete the prev slide, except the home
-
         if($prevSlide.attr('id') != 'contentRoot')
           $prevSlide.remove();
 
         if(typeof cb != 'undefined')
           cb();
 
-      }, 400);
+      }, 500);
 
     },
 
@@ -163,38 +160,34 @@ function($, _, views) {
     setHomeLayout: function(cb) {
       var self = this;
       
-      //$('div', self.staticViews.app.sidebar.$el).hide();
-      //$('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).hide();
+      self.staticViews.app.sidebar.$el.removeClass('visible');
+      /*self.staticViews.app.sidebar.$el.anim({translate3d: '0, 0, 0'}, 0.5, 'ease-in-out', function() {
+        
+        
+      });*/
+      self.staticViews.app.content.$el.removeClass('shrinked');
+      //self.staticViews.app.content.$el.anim({translate3d: '0, 0, 0'}, 0.5, 'ease-in-out');
+      $('#content').css({width: '100%'});
 
-      this.staticViews.app.sidebar.$el.removeClass('visible');
-      this.staticViews.app.content.$el.removeClass('shrinked');
-      
-      //setTimeout(function() {
-        //$('div', self.staticViews.app.sidebar.$el).show();
-        //$('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).show();
-      //}, 0);
-      
-      setTimeout(function() {
-        $('#content').css({'width': '100%'});
-        //$('#contentRoot').show();
+      setTimeout(function() {
         if(typeof cb != 'undefined')
           cb();
-      }, 400);
+      }, 800);
+
     },
     setRegularLayout: function() {
       var self = this;
-      
-      //$('div', self.staticViews.app.sidebar.$el).hide();
-      //$('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).hide();
-      
-      this.staticViews.app.sidebar.$el.addClass('visible');
-      this.staticViews.app.content.$el.addClass('shrinked');
-      var totalwidth = $(window).width() - 237;
-      $('#content').css({'width': totalwidth})
-      setTimeout(function() {
-        //$('div', self.staticViews.app.sidebar.$el).show();
-        $('.laway, .raway, .taway, .baway, .shown', self.staticViews.app.content.$el).show();
-      }, 0);
+
+      var thewidth = $(window).width() - self.staticViews.app.sidebar.$el.width();
+      $('#content').css({width: thewidth});
+      self.staticViews.app.sidebar.$el.addClass('visible');
+      /*self.staticViews.app.sidebar.$el.anim({translate3d: '287px, 0, 0'}, 0.5, 'ease-in-out', function() {
+        
+      });*/
+      self.staticViews.app.content.$el.addClass('shrinked');
+      /*self.staticViews.app.content.$el.anim({translate3d: '287px, 0, 0'}, 0.5, 'ease-in-out', function() {
+        
+      });*/
     },
 
     /**

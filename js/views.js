@@ -67,10 +67,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       $el: null,
       child: null,
       backButton: '<button class="back">back</button>',
-      mediaTypes : [
-        'MusicRecording',
-        'VideoObject'
-      ],
 
       events: {
         //'click .back': 'goBack'
@@ -83,14 +79,12 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         self.$el.attr('class', opt.paneOptions.classes);
         self.$el.hide();
         $('#'+opt.paneOptions.container).append(self.$el);
-        console.log(opt.data);
+        
         if(opt.data.get('@type') == 'VideoObject') {
           self.child = new FactoryMedia({
               model: opt.data,
-              width: 736,
+              width: 760,
               height: 460,
-              scroller: true,
-              scrollerSelector: '.scroll-wrapper',
               templateEl: '#media-template',
               mediaOptions: {
                 strategy: 'html5',
@@ -100,12 +94,11 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
               },
               el: self.$el[0]
           });
+          self.child.render();
         }
         else if(opt.data.get('@type') == 'MusicRecording') {
           self.child = new FactoryMedia({
               model: opt.data,
-              scroller: true,
-              scrollerSelector: '.scroll-wrapper',
               templateEl: '#media-template',
               mediaOptions: {
                 strategy: 'html5',
@@ -114,6 +107,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
               },
               el: self.$el[0]
           });
+          self.child.render();
         }
         else if(opt.data.get('@type') == 'ImageObject') {
           self.child = new views.mysteryImage({
@@ -121,6 +115,10 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             opt: opt.paneOptions,
             $parent: self.$el
           });
+          self.child.renderTitle();
+          setTimeout(function() {
+            self.child.render();
+          }, 900);
         }
         else {
           self.child = new views.mysteryBlogPost({
@@ -128,9 +126,18 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             opt: opt.paneOptions,
             $parent: self.$el
           });
+          self.child.render();
         }
-        
-        self.child.render();
+
+        if(opt.data.get('@type')) {
+          var thevideo = $('iframe', self.$el).clone();
+          $('.maincontent').css({height: thevideo.attr('height')+'px'});
+          $('iframe', self.$el).remove();
+          setTimeout(function() {
+            thevideo.attr('width', $('#content').width() - 100);
+            $('.maincontent', self.$el).append(thevideo);
+          }, 800);
+        }
 
         if(opt.paneOptions.backButton) {
           self.child.$el.prepend(self.backButton);
@@ -153,6 +160,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       el: '<div class="mysteryImage"></div>',
       $el: null,
       template: $('#image-template').html(),
+      titleTemplate: '<h4><%=title%></h4><div class="loader"></div>',
       $parent: null,
       theScroller: null,
 
@@ -161,7 +169,13 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
         this.$parent = opt.$parent;
         this.$el = $(this.el);
-        this.scrollable = opt.opt.scrollable;
+        //this.scrollable = opt.opt.scrollable;
+      },
+
+      renderTitle: function() {
+        var self = this;
+        self.$el.append(_.template(self.titleTemplate, {title: self.model.get('name')}));
+        self.$parent.append(self.$el);
       },
 
       generate: function(cb) {
@@ -172,23 +186,14 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       setContent: function(html) {
         var self = this;
         var $html = $(html);
-        $('img', $html).hide();
+        var $theimg = $('<img src="'+self.model.get('contentURL')+'" />');
         self.$el.append(html);
-        self.$parent.append(self.$el);
-
-        /*
-        if(self.scrollable) {
-          if(!self.theScroller) {
-            self.theScroller = new iScroll('scroll-'+self.model.get('guid'), {
-              hScroll: false,
-              scrollbarClass: 'contentScroll'
-            });
-          }
-          setTimeout(function() {
-            self.theScroller.refresh();
-          }, 800);
-        }
-        */
+        $('.maincontent', self.$el).append($theimg);
+        $('.innerContainer', self.$el).css({opacity: 0});
+        $theimg.on('load', function() {
+          $('.loader', self.$el).remove();
+          $('.innerContainer', self.$el).anim({opacity: 1}, 0.4, 'ease-in-out');
+        });
       }
 
     }),
@@ -215,8 +220,11 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         this.scrollable = opt.opt.scrollable;
 
         // Fix weird values sent by google ...
-        if(this.model.get('articleBody'))
+        if(this.model.get('articleBody')) {
           this.model.set({articleBody: this.model.get('articleBody').replace('src="//', 'src="http://')});
+          this.model.set({articleBody: this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="')});
+          console.log(this.model.get('articleBody'));
+        }
 
         // Add the title
         if (opt.opt.title) {
@@ -263,67 +271,9 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         */
       },
 
-      replaceContentWithLocalStorage: function(opt) {
-        var self = this;
-        var config = JSON.parse(localStorage.getItem('config')),
-            selectedConfigId = (localStorage.getItem('selectedConfig') - 1);
-        var $panel = $('article', self.$el);
-
-        // Clear the content
-        $panel.empty();
-
-        if(config) {
-          var rightConfig = config.pop();
-
-          if(opt.contentPart == 'Commitment') {
-            var $table = $('<table id="configDataTable"></table>');
-            var toAppend = '';
-            // Delete last element
-            rightConfig.formElements.pop();
-
-            _.each(rightConfig.formElements, function(line) {
-              var thehtml = '<tr>';
-              thehtml += '<td class="key">'+line.key+'</td>';
-              thehtml += '<td class="val">'+line.val+'</td>';
-              thehtml += '</tr>';
-
-              toAppend += thehtml;
-            });
-            $table.html(toAppend);
-            $panel.append($table);
-          }
-          else if(opt.contentPart == 'Conditions') {
-            $panel.append('<p>'+rightConfig.formElements.pop().val+'</p>');
-          }
-        } 
-      },
 
       enhance: function() {
         var self = this;
-
-        self._handleFullScreenVideo(self.$el);
-        self._handleFullScreenImages(self.$el);
-
-      },
-
-      _handleFullScreenImages: function(container) {
-        $('.image', container).bind('tap', function(e) {
-          var theimg = $('img', this);
-          theimg = theimg[0].cloneNode(true);
-          theimg = $(theimg);
-          theimg = $('<div>').append(theimg).html();
-          window.popup.setImage(theimg);
-        });
-      },
-
-      _handleFullScreenVideo: function(container) {
-        var self = this;
-        setTimeout(function() {
-          $('.video-link', container).bind('tap', function(e) {
-            window.popup.setVideo($('a', this).attr('href'));
-            return false;
-          });
-        }, 0);
       }
 
     }),
@@ -402,7 +352,9 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       showAnimated: function() {
         var self = this;
         self.$el.show().addClass('shown').addClass('anim');
-        setTimeout(self.videoEnded.bind(self), 1600);
+        setTimeout(function(e) {
+          self.videoEnded(e)
+        }, 1600);
       },
 
       videoEnded: function(e) {
@@ -411,9 +363,9 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         $('#tableofcontent').show();
         self.$el.addClass('anim2');
         $('#introtext').remove();
-        setTimeout(function() {
-          //self.$el.removeClass('anim').removeClass('anim2');
-        }, 2500);
+        setTimeout(function(e) {
+          $('.anim').removeClass('anim');
+        }, 1600);
       }
     }),
 
@@ -423,8 +375,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       $el: null,
       child: null,
       titleTemplate: '<h4><%=title%></h4>',
-      subTitleTemplate: '<h5><%=title%></h5>',
-      rubricTitleTemplate: '<h6><%=title%></h6>',
       innerContainer: '<div class="listpaneInnerContainer innerContainer"></div>',
       descriptionTemplate: '<article class="description"><%=description%></article>',
       listContainer: '<div class="listPane"></div>',
@@ -448,26 +398,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
         // Add the title
         if (opt.paneOptions.title) {
-          var realname = opt.paneOptions.title;
-          if(opt.paneOptions.titleType == 'small') {
-            self.$el.append(_.template(this.rubricTitleTemplate, {title: realname}));
-          }
-          else if(opt.paneOptions.titleType == 'medium') {
-            self.$el.append(_.template(this.subTitleTemplate, {title: realname}));
-          }
-          else if(opt.paneOptions.titleType == 'big') {
-            self.innerContainer.addClass('blacklisttitle');
-            self.$el.append(_.template(this.titleTemplate, {title: realname}));
-          }
-          else {
-            self.$el.append(_.template(this.titleTemplate, {title: realname}));
-          }
-        }
-
-        // Generate the pane's description if needed
-        var desc;
-        if((desc = opt.data.getDescriptionPost()) && opt.paneOptions.showDescription) {
-          self.innerContainer.append(_.template(this.descriptionTemplate, {description: desc.get('articleBody')}));
+          self.$el.append(_.template(this.titleTemplate, {title: opt.paneOptions.title}));
         }
 
         // Render the list container
@@ -479,20 +410,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
         // Render the panel
         $('#'+opt.paneOptions.container).append(self.$el);
-
-        // Set iSCroll if asked
-        /*
-        if(opt.paneOptions.scrollable) {
-          // couldn't use wrap() for some reason
-          var elBuffer = self.innerContainer.children();
-          self.innerContainer.append('<div class="scrollwrapper"></div>');
-          $('.scrollwrapper', self.innerContainer).append(elBuffer);
-          self.theScroller = new iScroll('scroll-'+opt.paneOptions.id, {
-            hScroll: false,
-            scrollbarClass: 'contentScroll'
-          });
-        }
-        */
 
         self.$el.hide();
         //Generate the data list and its items
@@ -523,8 +440,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           $('.back', self.$el).on('touchend', self.goBack);
         }
 
-        self._handleFullScreenImages(self.$el);
-        self._handleFullScreenVideo(self.$el);
         /*
         if(self.theScroller) {
           // refresh scroller in a new "i can't believe it's not a thread" to let the dom refresh
@@ -542,32 +457,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         document.location.hash = url;
         return false;
       },
-
-      _handleFullScreenImages: function(container) {
-        $('.image', container).bind('touchend', function(e) {
-          var theimg = $('img', this);
-          theimg = theimg[0].cloneNode(true);
-          theimg = $(theimg);
-          theimg = $('<div>').append(theimg).html();
-          window.popup.setImage(theimg);
-        });
-      },
-
-      _handleFullScreenVideo: function(container) {
-        var self = this;
-        setTimeout(function() {
-          $('.video-link').bind('touchend', function(e) {
-            window.popup.setVideo($('a', this).attr('href'));
-            e.preventDefault();
-            return false;
-          });
-        }, 0);
-      }
-
-    }),
-    
-    mysteryMedia: View.extend({
-      
     }),
 
     // a list representing a collection.
@@ -577,55 +466,75 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       // setContent is called by render(). It sets the content ...
       setContent: function(html) {
         $('ul', this.itemOptions.$parent).remove();
-        this.itemOptions.$parent.append(html);
-        $('ul', this.itemOptions.$parent).attr('id', this.itemOptions.listId || '');
-        $('ul', this.itemOptions.$parent).attr('class', this.itemOptions.listClasses || '');
+        var self = this,
+            $html = $(html),
+            theopt = this.itemOptions,
+            thelis = $('li', $html);
+        /**
+        * Only insert the first five elements right away.
+        * Wait for the end of the animation to load the
+        * rest of the list into the DOM.
+        **/
+        if(thelis.length > 5) {
+          $('li', $html).remove();
+          $html.append(thelis.slice(0, 5));
+
+          setTimeout(function() {
+            var modulo = Math.round((thelis.length - 5)/20),
+                i = 0;
+
+            var interval = setInterval(function() {
+              $html.append(thelis.slice(i*20, i*20+20));
+              if(i == modulo) {
+                // Manually triger enhance once again to add
+                // handlers on the more recent links.
+                //console.log("k");
+                self.enhance();
+                clearInterval(interval);
+                return;
+              }
+              i++;
+            }, 50);
+          }, 800);
+        }
+
+        theopt.$parent.append($html);
+        $('ul', theopt.$parent).attr('id', theopt.listId || '');
+        $('ul', theopt.$parent).attr('class', theopt.listClasses || '');
+
       },
 
       enhance: function() {
         var self = this;
-        /** Handle clicks on links in JS
-        * to avoid delay when clicking a link
-        * (iOS style)
-        **/
-        /*
-        $('a', this.itemOptions.$parent).on('touchstart', function(e) {
-          self.delay = new Date().getTime();
-          self.mousePos = {x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY};
-          self.oldtarget = e.target;
-        });
-
-        $('a', this.itemOptions.$parent).on('touchend', function(e) {
-
-          if(self.oldtarget != e.target)
-            return false;
-
-          if(new Date().getTime() - self.delay < 150)
-            document.location = $(this).attr('href');
-          return false;
-        });
-        */
+        
         $('a', this.itemOptions.$parent).each(function(el) {
           var tap = new Tap(this);
-          this.addEventListener('tap', function(e) {
-            var thelink = e.target;
-
-            while(!thelink.href) {
-              thelink = thelink.parentElement;
-            }
-
-            document.location = thelink.href;
-            e.preventDefault();
-            e.stopPropagation();
-
-            return false;
-          });
-          this.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          })
+          this.removeEventListener('tap', self.taphandle);
+          this.addEventListener('tap', self.taphandle);
+          this.removeEventListener('click', self.clickhandle);
+          this.addEventListener('click', self.clickhandle);
         });
+      },
+
+      taphandle: function(e) {
+        var thelink = e.target;
+
+        while(!thelink.href) {
+          thelink = thelink.parentElement;
+        }
+        
+        document.location = thelink.href;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        return false;
+      },
+
+      clickhandle: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
       }
 
     }),

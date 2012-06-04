@@ -90,7 +90,6 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
         this._find(opt, function(err, data) {
           for(var k in data.entries) {
             data.entries[k].path = self.get('path');
-            console.log();
             self.get('children').add(new models.Element(data.entries[k]));
           }
           if(typeof self._onDataLoaded == 'function')

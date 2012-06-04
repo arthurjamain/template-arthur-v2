@@ -2,8 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Project</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title></title>
+    <meta name="viewport" content="width=1024, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/tap.js"></script>
     <script data-joshfire-bootstrap
@@ -27,15 +28,19 @@
 
     <!-- Templates -->
     <script type="text/template" id="media-template">
-      <div class="mediacontainer">
-        <h4><%=item.name%></h4>
-        <div class="themedia">
-          <%=media.html%>
-          <div class="scroll-wrapper">
+      <h4><%=item.name%></h4>
+      <div class="mediaInnerContainer innerContainer">
+        
+          <div class="maincontent">
+            <%=media.html%>
+          </div>
+          <div class="subcontent scroll-wrapper">
             <article>
               <% if(item.author) { %>
                 <% if(item.author.length)
-                  theauthor = item.author.pop();
+                    theauthor = item.author.pop();
+                  else
+                    theauthor = item.author;
                   %>
                 <header>
                   <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
@@ -58,22 +63,22 @@
               </section>
             </article>
           </div>
-        </div>
       </div>
     </script>
 
     <script type="text/template" id="image-template">
-      <div class="imagecontainer">
-        <h4><%=item.name%></h4>
         <div class="imagepaneInnerContainer innerContainer">
-            <img src="<%=item.contentURL%>"/>
+          <div class="maincontent">
+
+          </div>
+          <div class="subcontent">
             <article>
               <% if(item.author) { %>
                 <% if(item.author.length)
                   theauthor = item.author.pop();
                   %>
                 <header>
-                  <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
+                  <% if(theauthor.thumbnail && theauthor.thumbnail.length) { %>
                     <img src="<%=theauthor.thumbnail[0].contentURL%>" alt="Author's picture" />
                   <% } %>
                   <% if(theauthor.url) { %>
@@ -88,10 +93,13 @@
                   <% } %>
                 </header>
               <% } %>
-              <section>
-                <%=item.description%>
-              </section>
+              <% if(item.description) { %>
+                <section>
+                  <%=item.description%>
+                </section>
+              <% } %>
             </article>
+          </div>
         </div>
       </div>
     </script>

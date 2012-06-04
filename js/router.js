@@ -27,6 +27,7 @@ function(Router, dataManager, uiManager, views, onReady) {
     initialize: function() {
       var self = this;
       uiManager.initialize(this);
+      uiManager.showPart('app');
       /**
       * Start loading the data. Once this is done,
       * _onDataLoaded is called and you can safely use
@@ -86,8 +87,6 @@ function(Router, dataManager, uiManager, views, onReady) {
       var self = this;
       self._onDataLoaded = function() {
 
-        uiManager.showPart('app');
-
         var data = dataManager.appTree;
 
         if (self.firstLaunch) {
@@ -96,35 +95,24 @@ function(Router, dataManager, uiManager, views, onReady) {
           var t = uiManager.setContentView(data, {
             container: 'content',
             id: 'contentRoot',
-            // anim: true,
             listId: 'tableofcontent',
-            // listClasses: 'vignette',
             itemType: 'home'
           });
 
           uiManager.getContentView('contentRoot').showAnimated();
-          // uiManager.getContentView('contentRoot').show();
 
         } else {
 
           if($('#contentRoot').hasClass('shown'))
             return;
 
-          uiManager.setContentView(data, {
-            container: 'content',
-            id: 'contentRoot'
-          });
+          $('.theplayer', '.shown').remove();
 
-          setTimeout(function() {
-            uiManager.setHomeLayout(function() {
-              setTimeout(function() {
-                $('#contentRoot').show();
-                uiManager.slideContentPane('contentRoot', {direction: 'right'});
-                $('#sidebar .list').empty();
-                $('#sidebar h3').empty();
-              }, 100);
-            });
-          }, 100);
+          uiManager.setHomeLayout(function() {
+            //setTimeout(function() {
+              uiManager.slideContentPane('contentRoot', {direction: 'right'});
+            //}, 2000);
+          });
         }
         self.previousContentLevel = 0;
 
@@ -148,7 +136,7 @@ function(Router, dataManager, uiManager, views, onReady) {
         Backbone.history.navigate('/view', true);
         return;
       }
-
+      
       //Get the right data
       var rootModel = dataManager.getDataFromPath(sidebarid);
 
@@ -189,7 +177,7 @@ function(Router, dataManager, uiManager, views, onReady) {
           //we were 1 post deeper
           if(!theview.$el.hasClass('shown')) {
             uiManager.slideContentPane(firstChapter.get('guid'), {direction: direction}, function() {
-                uiManager.setRegularLayout();
+              uiManager.setRegularLayout();
             });
           }
         }
@@ -251,20 +239,6 @@ function(Router, dataManager, uiManager, views, onReady) {
           if(!theview.$el.hasClass('shown')) {
             uiManager.slideContentPane(rootModel.get('guid'), {direction: direction});
           }
-        }
-
-        /** This is probably the most horrible thing in the whole app **/
-        if(theview && contentid == "c219") {
-          if(typeof theview.child.replaceContentWithLocalStorage == 'function')
-            theview.child.replaceContentWithLocalStorage({
-              contentPart : 'Commitment'
-            });
-        }
-        if(theview && contentid == "c353") {
-          if(typeof theview.child.replaceContentWithLocalStorage == 'function')
-            theview.child.replaceContentWithLocalStorage({
-              contentPart : 'Conditions'
-            });
         }
 
         self.previousContentIndex = curPaneIndex;

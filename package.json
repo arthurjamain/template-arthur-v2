@@ -1,0 +1,98 @@
+{
+  "name": "mystery",
+  "fullName": "Mystery",
+  "version": "1.0",
+  "description": "A generic animated template letting you display most of the datasources with a more hierarchical approach.",
+  "keywords": [
+    "generic",
+    "hierarchical"
+  ],
+  "joshfire": {
+    "images": {
+      "small": "",
+      "big": ""
+    },
+    "datasources": {
+      "main": {
+        "title": "Main Tabs",
+        "description": "Any type of datasources accepted.",
+        "multiple":true
+      }
+    },
+    "devices": [
+      {
+        "devices": "tablet",
+        "startfile": "index.html",
+        "images": "",
+        "screenshots": [
+          "",
+          ""
+        ]
+      },
+      {
+        "devices": "desktop",
+        "startfile": "index.html",
+        "images": "",
+        "screenshots": [
+          "",
+          ""
+        ]
+      }
+    ],
+    "options": {
+      "schema": {
+        "backgroundurl": {
+          "title": "Background URL (for TV version)",
+          "type": "string"
+        },
+        "tabs": {
+          "title": "Tabs titles",
+          "type": "array",
+          "items": [
+            {
+              "title": "Tab title (max. 10 characters)",
+              "type": "string",
+              "maxLength": 20
+            }
+          ]
+        }
+      },
+      "form": [
+        {
+          "type": "fieldset",
+          "legend": "Styles",
+          "items": [
+            "backgroundurl"
+          ]
+        },
+        {
+          "type": "fieldset",
+          "legend": "Tabs",
+          "items": [
+            {
+              "type": "tabarray",
+              "items": [
+                {
+                  "type": "section",
+                  "legend": "{{value}}",
+                  "items": [
+                    {
+                      "key": "tabs[]",
+                      "valueInLegend": true,
+                      "value": "Tab {{idx}}"
+                    },
+                    {
+                      "title": "Tab data source",
+                      "description": "Any type of datasources accepted.",
+                      "key": "datasources.main[]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
