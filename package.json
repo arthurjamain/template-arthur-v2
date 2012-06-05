@@ -60,7 +60,10 @@
           "type": "fieldset",
           "legend": "Styles",
           "items": [
-            "backgroundurl"
+            {
+              "key": "backgroundurl",
+              "type": "file-transloadit"
+            }
           ]
         },
         {
@@ -72,8 +75,13 @@
               "items": [
                 {
                   "type": "optionfieldset",
-                  "legend": "salut",
+                  "legend": "{{idx}}. {{value}}",
                   "items": [
+                    {
+                      "key": "tabs[]",
+                      "valueInLegend": true,
+                      "value": "New Tab"
+                    },
                     {
                       "title": "Tab data source",
                       "description": "Any type of datasources accepted.",
