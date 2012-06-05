@@ -5,6 +5,7 @@ function(onReady, router) {
 
   // Start the router-> parse URL and act accordingly
   /**
+  *
   * To summarize the files :
   *   - router kinda acts as the app controller. Depending
   *     on the URL it uses the model and modifies the views.
@@ -17,11 +18,6 @@ function(onReady, router) {
   *     the models using the data. the models then create their own views.
   *   - uiManager handles the view elements that are static : the
   *     containers, the sidebar, the config...
-
-  J'ai essayé de commenter au maximum, j'espère que la structure
-  t'ira. Le but était d'intégrer au mieux backbone et son modèle
-  d'app.
-
   *
   **/
 

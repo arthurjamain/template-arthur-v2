@@ -47,7 +47,7 @@
         },
         "tabs": {
           "title": "tabs",
-          "type": "array",
+          "type": "tabarray",
           "items": {
               "title": "Tab title (max. 20 characters)",
               "type": "string",
@@ -68,7 +68,7 @@
           "legend": "Tabs",
           "items": [
             {
-              "type": "array",
+              "type": "tabarray",
               "items": [
                 {
                   "type": "optionfieldset",
