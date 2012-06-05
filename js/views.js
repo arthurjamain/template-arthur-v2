@@ -129,7 +129,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           self.child.render();
         }
 
-        if(opt.data.get('@type')) {
+        if(opt.data.get('@type') == 'VideoObject') {
           var thevideo = $('iframe', self.$el).clone();
           $('.maincontent').css({height: thevideo.attr('height')+'px'});
           $('iframe', self.$el).remove();

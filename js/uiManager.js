@@ -160,20 +160,16 @@ function($, _, views) {
     setHomeLayout: function(cb) {
       var self = this;
       
-      self.staticViews.app.sidebar.$el.removeClass('visible');
-      /*self.staticViews.app.sidebar.$el.anim({translate3d: '0, 0, 0'}, 0.5, 'ease-in-out', function() {
-        
-        
-      });*/
-      self.staticViews.app.content.$el.removeClass('shrinked');
-      //self.staticViews.app.content.$el.anim({translate3d: '0, 0, 0'}, 0.5, 'ease-in-out');
       $('#content').css({width: '100%'});
+
+      self.staticViews.app.sidebar.$el.removeClass('visible');
+      self.staticViews.app.content.$el.removeClass('shrinked');
+      
 
       setTimeout(function() {
         if(typeof cb != 'undefined')
           cb();
-      }, 800);
-
+      }, 1000);
     },
     setRegularLayout: function() {
       var self = this;

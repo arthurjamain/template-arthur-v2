@@ -119,7 +119,6 @@ function(Router, dataManager, uiManager, views, onReady) {
       };
 
       if (typeof dataManager.appTree !== undefined && dataManager.appTree) {
-        // simulate latency
         self._onDataLoaded();
         self._onDataLoaded = null;
       }
