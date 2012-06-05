@@ -501,11 +501,9 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           }, 800);
         }
 
-        //setTimeout(function() {
-          theopt.$parent.append($html);
-          $('ul', theopt.$parent).attr('id', theopt.listId || '');
-          $('ul', theopt.$parent).attr('class', theopt.listClasses || '');
-        //}, 100);
+        theopt.$parent.append($html);
+        $('ul', theopt.$parent).attr('id', theopt.listId || '');
+        $('ul', theopt.$parent).attr('class', theopt.listClasses || '');
 
       },
 
@@ -519,6 +517,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           this.removeEventListener('click', self.clickhandle);
           this.addEventListener('click', self.clickhandle);
         });
+
       },
 
       taphandle: function(e) {
