@@ -171,6 +171,7 @@ function($, _, views) {
           cb();
       }, 1000);
     },
+
     setRegularLayout: function() {
       var self = this;
 
@@ -184,6 +185,17 @@ function($, _, views) {
       /*self.staticViews.app.content.$el.anim({translate3d: '287px, 0, 0'}, 0.5, 'ease-in-out', function() {
         
       });*/
+    },
+
+    /**
+    * 
+    **/
+    setGlobalConfig: function(conf) {
+      if(conf.app.name) {
+        $('title').html(conf.app.name);
+        $('#thefavicon').attr('href', conf.app.icon);
+        $('#tableofcontent').css({background: 'url('+conf.template.options.backgroundurl+')'});
+      }
     },
 
     /**

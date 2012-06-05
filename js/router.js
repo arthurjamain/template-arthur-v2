@@ -36,10 +36,14 @@ function(Router, dataManager, uiManager, views, onReady) {
       **/
       onReady(function() {
         self._loadData(function(tree) {
+          // Set Configurations
           // Register all the datasources as backbone Models
           if (Joshfire.factory) {
+            uiManager.setGlobalConfig(Joshfire.factory.config)
             var tabs = Joshfire.factory.getDataSource('main');
             for(var k in tabs.children) {
+              // Set its true name
+              tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
               tree.addBranch(tabs.children[k]);
             }
           }

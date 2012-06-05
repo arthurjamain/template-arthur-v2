@@ -320,7 +320,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         // Render the panel
         $('#'+opt.paneOptions.container).append(self.$el);
         self.$el.hide();
-
         //Generate the data list and its items
         self.child = new views.mysteryList({
           // this selects the kind of view to create as
@@ -345,6 +344,12 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         self.child.render();
         // Hide the list at first
         $('#'+opt.paneOptions.listId).hide();
+
+        // Set the background image.
+        var bg = Joshfire.factory.config.template.options.backgroundurl;
+        if(bg) 
+          $('#'+opt.paneOptions.listId).css({background: '#F8F6F4 url('+bg+') no-repeat center center'});
+        
       },
 
       showAnimated: function() {
@@ -496,11 +501,11 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           }, 800);
         }
 
-        setTimeout(function() {
+        //setTimeout(function() {
           theopt.$parent.append($html);
           $('ul', theopt.$parent).attr('id', theopt.listId || '');
           $('ul', theopt.$parent).attr('class', theopt.listClasses || '');
-        }, 100);
+        //}, 100);
 
       },
 
