@@ -25,11 +25,17 @@ function(onReady, router) {
   *
   **/
 
+  
   onReady(function() {
+    
     router.historyStart();
 
+    document.addEventListener("deviceready", function() {
+      //cordova.exec(null, null, "SplashScreen", "hide", []);
+    }, false);
+    
     document.addEventListener('pause', function() {
-      Backbone.history.navigate('/lock', true);
+      //Backbone.history.navigate('/lock', true);
     }, false);
 
     // probably useless because of pause
