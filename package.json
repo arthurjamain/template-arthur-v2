@@ -43,7 +43,7 @@
       "schema": {
         "backgroundurl": {
           "title": "Background URL (for TV version)",
-          "type": "file"
+          "type": "string"
         },
         "tabs": {
           "title": "tabs",
@@ -60,10 +60,7 @@
           "type": "fieldset",
           "legend": "Style",
           "items": [
-            {
-              "key": "backgroundurl",
-              "type": "file-transloadit"
-            }
+            "backgroundurl"
           ]
         },
         {
