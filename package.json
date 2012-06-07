@@ -73,7 +73,8 @@
           "type": "fieldset",
           "legend": "Style",
           "items": [
-            "backgroundurl"
+            "backgroundurl",
+            "corporatelogo"
           ]
         },
         {
