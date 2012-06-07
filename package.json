@@ -29,6 +29,8 @@
         },
         "orientation": "landscape",
         "screenshots": [
+          "marketing/screenshot_ipad_1.png",
+          "marketing/screenshot_ipad_2.png"
         ]
       },
       {
@@ -39,6 +41,8 @@
           "big": ""
         },
         "screenshots": [
+          "marketing/screenshot_desktop_1.png",
+          "marketing/screenshot_desktop_2.png"
         ]
       }
     ],
