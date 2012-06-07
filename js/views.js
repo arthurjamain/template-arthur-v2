@@ -345,12 +345,20 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         // Hide the list at first
         $('#'+opt.paneOptions.listId).hide();
 
-        // Set the background image.
         if(Joshfire && Joshfire.factory) {
+          // Set the background image.
           var bg = Joshfire.factory.config.template.options.backgroundurl;
           if(bg) 
             $('#'+opt.paneOptions.listId).css({background: '#F8F6F4 url('+bg+') no-repeat center center'});
+
+          // Set the corporate logo.
+          var logo = Joshfire.factory.config.template.options.corporatelogo;
+          if(logo) {
+            $('#logo .icon').css({background: 'transparent url('+logo+') no-repeat center center'});
+            $('#logo .flareicon').css({background: 'transparent url('+logo+') no-repeat center center'});
+          }
         }
+
       },
 
       showAnimated: function() {

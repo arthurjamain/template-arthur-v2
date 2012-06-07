@@ -884,7 +884,7 @@ blockquote {
   padding: 0 !important;
   width: 100%;
   height: 100%;
-  background: url('../img/img-background-sidebar.png');
+  background: url('../img/default-background.png');
   background-size: cover;
 }
 
@@ -1331,8 +1331,8 @@ blockquote {
 
 #logo div.icon {
   z-index: 3;
-  background: url('http://placehold.it/190x200') no-repeat 233px 234px;
-  background-size: 190px 200px;
+  background: url('http://placehold.it/200x200') no-repeat 233px 234px;
+  background-size: 200px 200px;
 }
 
 #logo div.spots {
@@ -1347,8 +1347,8 @@ blockquote {
 
 #logo div.flareicon {
   z-index: 5;
-  background: url('http://placehold.it/190x200') no-repeat 233px 234px;
-  background-size: 190px 200px;
+  background: url('http://placehold.it/200x200') no-repeat 233px 234px;
+  background-size: 200px 200px;
 }
 
 /*------------------------

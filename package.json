@@ -53,6 +53,11 @@
           "description": "A large background image that will fill the home screen.",
           "type": "string"
         },
+        "corporatelogo": {
+          "title": "Corporate Logo URL.",
+          "description": "A link to a logo image of your choice. Minimum size: 200x200. Ratios other than 1:1 are not yet supported.",
+          "type": "string"
+        },
         "tabs": {
           "title": "tabs",
           "type": "tabarray",
