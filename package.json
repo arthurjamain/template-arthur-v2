@@ -2,15 +2,15 @@
   "name": "mystery",
   "fullName": "Mystery",
   "version": "1.0",
-  "description": "A generic animated template letting you display most of the datasources with a more hierarchical approach.",
+  "description": "A generic-purpose animated template letting you display most of the datasources using a more hierarchical approach.",
   "keywords": [
     "generic",
     "hierarchical"
   ],
   "joshfire": {
     "images": {
-      "small": "",
-      "big": ""
+      "small": "marketing/arthur(380-236)-3.png",
+      "big": "marketing/arthur(700-335).png"
     },
     "datasources": {
       "main": {
@@ -23,26 +23,30 @@
       {
         "devices": "tablet",
         "startfile": "index.html",
-        "images": "",
+        "images": {
+          "small": "",
+          "big": ""
+        },
+        "orientation": "landscape",
         "screenshots": [
-          "",
-          ""
         ]
       },
       {
         "devices": "desktop",
         "startfile": "index.html",
-        "images": "",
+        "images": {
+          "small": "",
+          "big": ""
+        },
         "screenshots": [
-          "",
-          ""
         ]
       }
     ],
     "options": {
       "schema": {
         "backgroundurl": {
-          "title": "Background URL (for TV version)",
+          "title": "Background URL.",
+          "description": "A large background image that will fill the home screen.",
           "type": "string"
         },
         "tabs": {

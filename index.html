@@ -19,7 +19,6 @@
           <header>
             <a href="#/view" class="back"></a>
             <h2></h2>
-            <a href="#/view" class="curChapter"><h3></h3></a>
           </header>
           <div class="list"></div>
         </section>
@@ -49,7 +48,7 @@
                     <img src="<%=item.author.thumbnail[0].contentURL%>" alt="Author's picture" />
                   <% } %>
                   <% if(theauthor.url) { %>
-                    <span class="author">By <a href="<%=item.author.url%>"><%=theauthor.name%></a></span>
+                    <span class="author">By <a target="_blank" href="<%=item.author.url%>"><%=theauthor.name%></a></span>
                   <% } else { %>
                     <span class="author">By <%=theauthor.name%></span>
                   <% } %>
@@ -84,7 +83,7 @@
                     <img src="<%=theauthor.thumbnail[0].contentURL%>" alt="Author's picture" />
                   <% } %>
                   <% if(theauthor.url) { %>
-                    <span class="author">By <a href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
+                    <span class="author">By <a target="_blank" href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
                   <% } else { %>
                     <span class="author">By <%=theauthor.name%></span>
                   <% } %>

@@ -346,10 +346,11 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         $('#'+opt.paneOptions.listId).hide();
 
         // Set the background image.
-        var bg = Joshfire.factory.config.template.options.backgroundurl;
-        if(bg) 
-          $('#'+opt.paneOptions.listId).css({background: '#F8F6F4 url('+bg+') no-repeat center center'});
-        
+        if(Joshfire && Joshfire.factory) {
+          var bg = Joshfire.factory.config.template.options.backgroundurl;
+          if(bg) 
+            $('#'+opt.paneOptions.listId).css({background: '#F8F6F4 url('+bg+') no-repeat center center'});
+        }
       },
 
       showAnimated: function() {
