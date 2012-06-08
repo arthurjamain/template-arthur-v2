@@ -11,7 +11,7 @@
           type="image/png" 
           href="http://example.com/myicon.png">
     <script src="js/tap.js"></script>
-    <script data-joshfire-bootstrap></script>
+    <script data-joshfire-bootstrap src="http://factory.joshfire.com/bootstrap/4f9aba6e1e4daf01000014d9/auto/auto/"></script>
   </head>
   <body>
     <div id="root">
@@ -29,6 +29,41 @@
     <script data-main="app" src="js/joshfire-framework/lib/adapters/ios/bootstrap.js"></script>
 
     <!-- Templates -->
+    <script type="text/template" id="article-template">
+      <h4>
+    <% 
+      var theauthor;
+      if(item.author) { %>
+      <% if(item.author.length)
+          theauthor = item.author[item.author.length - 1];
+        else
+          theauthor = item.author;
+      } %>
+        <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
+          <div class="profilepic" style="background: transparent url(<%=theauthor.thumbnail[0].contentURL%>) no-repeat top left"></div>
+        <% }
+        else if(theauthor.image && theauthor.image.contentURL) {%>
+          <div class="profilepic" style="background: transparent url(<%=theauthor.image.contentURL%>) no-repeat top left"></div>
+        <%}%>
+        <div class="profileinfo">
+        <% if(theauthor.url) { %>
+          <span class="author">By <a target="_blank" href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
+        <% } else { %>
+          <span class="author">By <%=theauthor.name%></span>
+        <% } %>
+        <%
+          thedate = item.dateCreated || item.datePublished || item.dateAdded; 
+         if(thedate) { %>
+          <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+        <% } %>
+        </div>
+      </h4>
+      <div class="articleInnerContainer innerContainer">
+        <div class="maincontent">
+          <%=item.name%>
+        </div>
+      </div>
+    </script>
     <script type="text/template" id="media-template">
       <h4><%=item.name%></h4>
       <div class="mediaInnerContainer innerContainer">
@@ -48,6 +83,7 @@
                   <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
                     <img src="<%=item.author.thumbnail[0].contentURL%>" alt="Author's picture" />
                   <% } %>
+                  <div class="authorinfo">
                   <% if(theauthor.url) { %>
                     <span class="author">By <a target="_blank" href="<%=item.author.url%>"><%=theauthor.name%></a></span>
                   <% } else { %>
@@ -56,8 +92,9 @@
                   <%
                     thedate = item.dateCreated || item.datePublished || item.dateAdded; 
                    if(thedate) { %>
-                    <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+                    <span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
                   <% } %>
+                  </div>
                 </header>
               <% } %>
               <section>

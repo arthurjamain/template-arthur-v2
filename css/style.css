@@ -272,14 +272,13 @@ blockquote {
 
 #content article {
   padding: 20px 10% 200px 10%;
-  line-height: 22px;
+  line-height: 30px;
+  font-size: 16px;
+  color: #222;
 }
 
 #content article p {
   margin-top: 0;
-  font-size: 16px;
-  line-height: 30px;
-  color: #222;
   max-width: 620px;
 }
 
@@ -416,6 +415,36 @@ blockquote {
   padding: 10px 20px;
   font-size: 12px;
   border-radius: 5px;
+}
+
+#content .articleStatus .profilepic {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px #000;
+  float: left;
+  background-size: 100% 100%;
+  background-size: cover;
+}
+
+#content .articleStatus .profileinfo {
+  float: left;
+  padding-left: 20px;
+}
+
+#content .articleStatus .author a {
+  color: #222;
+  text-decoration: none;
+  border-bottom: 1px dotted #222;
+}
+
+#content .articleStatus .date {
+  font-size: 20px;
+}
+
+#content .articleStatus .maincontent {
+  line-height: 35px;
+  font-size: 20px;
 }
 
 #content .image {
@@ -660,7 +689,7 @@ blockquote {
   line-height: 25px;
   vertical-align: middle;
   display: table-cell;
-  word-break: hyphenate;
+  word-break: break-all;
 }
 
 #sidebar .list .count {
@@ -950,6 +979,17 @@ blockquote {
   margin: 0 auto;
 }
 
+#content .mediaInnerContainer .authorinfo {
+  float: left;
+}
+
+#content .mediaInnerContainer header img {
+  height: 30px;
+  width: 30px;
+  max-width: none;
+  max-height: none;
+}
+
 #content .maincontent {
   padding: 50px;
 } 
@@ -1004,9 +1044,8 @@ blockquote {
 
 #content article header .author, #content article header .date {
   display: block;
-  float: left;
-  line-height: 16px;
-  height: 16px;
+  line-height: 15px;
+  height: 20px;
   padding-left: 10px;
   font-size: 12px;
 }

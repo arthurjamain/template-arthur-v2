@@ -120,6 +120,14 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             self.child.render();
           }, 900);
         }
+        else if(opt.data.get('@type') == 'Article/Status') {
+          self.child = new views.mysteryArticle({
+            model: opt.data,
+            opt: opt.paneOptions,
+            $parent: self.$el
+          });
+          self.child.render();
+        }
         else {
           self.child = new views.mysteryBlogPost({
             model: opt.data,
@@ -203,6 +211,44 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         });
       }
 
+    }),
+    
+    mysteryArticle: View.extend({
+      el: '<div class="articleStatus"></div>',
+      $el: null,
+      templateEl: $('#article-template'),
+      titleEl: null,
+      $parent: null,
+
+      scrollable: false,
+      theScroller: null,
+
+      initialize: function(opt) {
+        var self = this;
+
+        this.$parent = opt.$parent;
+        this.$el = $(this.el);
+        this.scrollable = opt.opt.scrollable;
+
+        // Fix weird values sent by google ...
+        if(this.model.get('articleBody')) {
+          this.model.attributes.articleBody = this.model.get('articleBody').replace('src="//', 'src="http://');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="');
+        }
+      },
+
+      generate: function(cb) {
+        var self = this;
+        cb(null, _.template(self.templateEl.html(), {title: self.titleEl, item: self.model.toJSON(), scrollId: 'scroll-' + self.model.get('guid')}));
+      },
+
+      setContent: function(html) {
+        var self = this;
+        var $html = $(html);
+        $('img', $html).hide();
+        self.$el.append(html);
+        self.$parent.append(self.$el);
+      }
     }),
 
     // A blogpost element

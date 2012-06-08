@@ -25,6 +25,17 @@ function($, _, views) {
       this.staticViews.app = new views.app();
       this.popup = new views.popup();
       window.popup = this.popup;
+
+      /**
+      * Handle window resize.
+      **/
+      $(window).on('resize', function() {
+        if($('#content').hasClass('shrinked')) {
+          var thewidth = $(window).width();
+          thewidth -= $('#sidebar').width();
+          $('#content').css({width: thewidth});
+        }
+      });
     },
 
     // Creates or returns the appropriate content view
