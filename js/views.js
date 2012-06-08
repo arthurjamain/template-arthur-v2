@@ -407,9 +407,9 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           // Set the corporate logo.
           var logo = Joshfire.factory.config.app.logo;
           if(logo) {
-            $('#logo .icon').css({background: 'transparent url('+logo+') no-repeat center center'});
+            $('#logo .icon').css({background: 'transparent url('+logo.contentURL+') no-repeat center center'});
             $('#logo .flareicon').css({
-              background: 'transparent url('+logo+') no-repeat top left'
+              background: 'transparent url('+logo.contentURL+') no-repeat center center'
             });
           }
         }
