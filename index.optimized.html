@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=1024, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/style.css">
+    <link id="thefavicon" 
+          rel="icon" 
+          type="image/png" 
+          href="http://example.com/myicon.png">
+    <script src="js/tap.js"></script>
+    <script data-joshfire-bootstrap src="http://factory.joshfire.com/bootstrap/4f9aba6e1e4daf01000014d9/auto/auto/"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div id="app">
+        <section id="sidebar">
+          <header>
+            <a href="#/view" class="back"></a>
+            <h2></h2>
+          </header>
+          <div class="list"></div>
+        </section>
+        <section id="content"></section>
+      </div>
+    </div>
+    <script src="app.optimized.js"></script>
+
+    <!-- Templates -->
+    <script type="text/template" id="article-template">
+      <h4>
+    <% 
+      var theauthor;
+      if(item.author) { %>
+      <% if(item.author.length)
+          theauthor = item.author[item.author.length - 1];
+        else
+          theauthor = item.author;
+      } %>
+        <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
+          <div class="profilepic" style="background: transparent url(<%=theauthor.thumbnail[0].contentURL%>) no-repeat top left"></div>
+        <% }
+        else if(theauthor.image && theauthor.image.contentURL) {%>
+          <div class="profilepic" style="background: transparent url(<%=theauthor.image.contentURL%>) no-repeat top left"></div>
+        <%}%>
+        <div class="profileinfo">
+        <% if(theauthor.url) { %>
+          <span class="author">By <a target="_blank" href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
+        <% } else { %>
+          <span class="author">By <%=theauthor.name%></span>
+        <% } %>
+        <%
+          thedate = item.dateCreated || item.datePublished || item.dateAdded; 
+         if(thedate) { %>
+          <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+        <% } %>
+        </div>
+      </h4>
+      <div class="articleInnerContainer innerContainer">
+        <div class="maincontent">
+          <%=item.name%>
+        </div>
+      </div>
+    </script>
+    <script type="text/template" id="media-template">
+      <h4><%=item.name%></h4>
+      <div class="mediaInnerContainer innerContainer">
+        
+          <div class="maincontent">
+            <%=media.html%>
+          </div>
+          <div class="subcontent scroll-wrapper">
+            <article>
+              <% if(item.author) { %>
+                <% if(item.author.length)
+                    theauthor = item.author.pop();
+                  else
+                    theauthor = item.author;
+                  %>
+                <header>
+                  <% if(theauthor.thumbnail && item.author.thumbnail.length) { %>
+                    <img src="<%=item.author.thumbnail[0].contentURL%>" alt="Author's picture" />
+                  <% } %>
+                  <div class="authorinfo">
+                  <% if(theauthor.url) { %>
+                    <span class="author">By <a target="_blank" href="<%=item.author.url%>"><%=theauthor.name%></a></span>
+                  <% } else { %>
+                    <span class="author">By <%=theauthor.name%></span>
+                  <% } %>
+                  <%
+                    thedate = item.dateCreated || item.datePublished || item.dateAdded; 
+                   if(thedate) { %>
+                    <span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+                  <% } %>
+                  </div>
+                </header>
+              <% } %>
+              <section>
+                <%=item.description%>
+              </section>
+            </article>
+          </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="image-template">
+        <div class="imagepaneInnerContainer innerContainer">
+          <div class="maincontent">
+
+          </div>
+          <div class="subcontent">
+            <article>
+              <% if(item.author) { %>
+                <% if(item.author.length)
+                  theauthor = item.author.pop();
+                  %>
+                <header>
+                  <% if(theauthor.thumbnail && theauthor.thumbnail.length) { %>
+                    <img src="<%=theauthor.thumbnail[0].contentURL%>" alt="Author's picture" />
+                  <% } %>
+                  <% if(theauthor.url) { %>
+                    <span class="author">By <a target="_blank" href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
+                  <% } else { %>
+                    <span class="author">By <%=theauthor.name%></span>
+                  <% } %>
+                  <%
+                    thedate = item.dateCreated || item.datePublished; 
+                    if(thedate) { %>
+                    <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+                  <% } %>
+                </header>
+              <% } %>
+              <% if(item.description) { %>
+                <section>
+                  <%=item.description%>
+                </section>
+              <% } %>
+            </article>
+          </div>
+        </div>
+      </div>
+    </script>
+
+  </body>
+</html>

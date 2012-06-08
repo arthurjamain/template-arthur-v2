@@ -22,7 +22,7 @@
     "devices": [
       {
         "devices": "tablet",
-        "startfile": "index.html",
+        "startfile": "index.optimized.html",
         "images": {
           "small": "",
           "big": ""
@@ -35,7 +35,7 @@
       },
       {
         "devices": "desktop",
-        "startfile": "index.html",
+        "startfile": "index.optimized.html",
         "images": {
           "small": "",
           "big": ""
