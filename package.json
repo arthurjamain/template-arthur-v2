@@ -10,25 +10,12 @@
   "joshfire": {
     "premium": true,
     "prices": {
-      "desktop": {
-        "devices":["desktop"],
-        "onetime":{
-          "eur":0,
-          "usd":0
-        }
-      },
-      "tablet":{
-        "devices":["tablet"],
-        "onetime":{
-          "eur":49,
-          "usd":59
-        }
-      },
-      "all":{
+      "all": {
         "devices":["desktop","tablet"],
         "onetime":{
           "eur":49,
           "usd":59
+        }
       }
     },
     "images": {
