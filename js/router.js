@@ -45,7 +45,6 @@ function(Router, dataManager, uiManager, views, onReady) {
               for(var k in tabs.children) {
                 // Set its true name
                 if(tabs.children.hasOwnProperty(k)) {
-                  console.log(tabs.children, k, Joshfire.factory);
                   tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
                   tree.addBranch(tabs.children[k]);
                 }

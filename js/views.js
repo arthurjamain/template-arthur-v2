@@ -216,7 +216,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
     mysteryArticle: View.extend({
       el: '<div class="articleStatus"></div>',
       $el: null,
-      templateEl: $('#article-template'),
+      templateEl: '#article-template',
       titleEl: null,
       $parent: null,
 
@@ -229,6 +229,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         this.$parent = opt.$parent;
         this.$el = $(this.el);
         this.scrollable = opt.opt.scrollable;
+        this.templateEl = $(this.templateEl);
 
         // Fix weird values sent by google ...
         if(this.model.get('articleBody')) {
@@ -236,19 +237,21 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           this.model.attributes.articleBody = this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="');
         }
       },
-
+      
       generate: function(cb) {
         var self = this;
         cb(null, _.template(self.templateEl.html(), {title: self.titleEl, item: self.model.toJSON(), scrollId: 'scroll-' + self.model.get('guid')}));
       },
-
+      
       setContent: function(html) {
         var self = this;
         var $html = $(html);
         $('img', $html).hide();
         self.$el.append(html);
         self.$parent.append(self.$el);
+        return;
       }
+      
     }),
 
     // A blogpost element
