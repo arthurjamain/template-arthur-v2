@@ -398,7 +398,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             $('#'+opt.paneOptions.listId).css({background: '#F8F6F4 url('+bg+') no-repeat center center'});
 
           // Set the corporate logo.
-          var logo = Joshfire.factory.config.template.options.corporatelogo;
+          var logo = Joshfire.factory.config.app.logo;
           if(logo) {
             $('#logo .icon').css({background: 'transparent url('+logo+') no-repeat center center'});
             $('#logo .flareicon').css({background: 'transparent url('+logo+') no-repeat center center'});

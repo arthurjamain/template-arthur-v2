@@ -204,7 +204,8 @@ function($, _, views) {
     setGlobalConfig: function(conf) {
       if(conf.app.name) {
         $('title').html(conf.app.name);
-        $('#thefavicon').attr('href', conf.app.icon);
+        if(conf.app.icon)
+          $('#thefavicon').attr('href', conf.app.icon.contentURL);
         $('#tableofcontent').css({background: 'url('+conf.template.options.backgroundurl+')'});
       }
     },

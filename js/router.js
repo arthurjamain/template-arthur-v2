@@ -41,10 +41,15 @@ function(Router, dataManager, uiManager, views, onReady) {
           if (Joshfire.factory) {
             uiManager.setGlobalConfig(Joshfire.factory.config)
             var tabs = Joshfire.factory.getDataSource('main');
-            for(var k in tabs.children) {
-              // Set its true name
-              tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
-              tree.addBranch(tabs.children[k]);
+            if(tabs && typeof tabs.children != 'undefined') {
+              for(var k in tabs.children) {
+                // Set its true name
+                if(tabs.children.hasOwnProperty(k)) {
+                  console.log(tabs.children, k, Joshfire.factory);
+                  tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
+                  tree.addBranch(tabs.children[k]);
+                }
+              }
             }
           }
         });
