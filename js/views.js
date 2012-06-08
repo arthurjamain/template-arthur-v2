@@ -174,7 +174,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
       el: '<div class="mysteryImage"></div>',
       $el: null,
-      template: $('#image-template').html(),
+      template: '#image-template',
       titleTemplate: '<h4><%=title%></h4><div class="loader"></div>',
       $parent: null,
       theScroller: null,
@@ -184,6 +184,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
         this.$parent = opt.$parent;
         this.$el = $(this.el);
+        this.template = $('#image-template').html();
         //this.scrollable = opt.opt.scrollable;
       },
 
