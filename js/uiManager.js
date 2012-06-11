@@ -145,6 +145,7 @@ function($, _, views) {
         from = 'baway';
         to = 'taway';
       }
+
       this.contentPanes[id].$el.attr('class', 'notransition '+from).addClass(from);
       this.contentPanes[id].$el.show();
       
@@ -202,12 +203,12 @@ function($, _, views) {
     * 
     **/
     setGlobalConfig: function(conf) {
-      if(conf.app.name) {
+      if(conf.app.name) 
         $('title').html(conf.app.name);
-        if(conf.app.icon)
-          $('#thefavicon').attr('href', conf.app.icon.contentURL);
+      if(conf.app.icon)
+        $('#thefavicon').attr('href', conf.app.icon.contentURL);
+      if(conf.template.options.backgroundurl)
         $('#tableofcontent').css({background: 'url('+conf.template.options.backgroundurl+')'});
-      }
     },
 
     /**

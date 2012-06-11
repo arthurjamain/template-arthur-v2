@@ -1,7 +1,7 @@
 {
   "name": "arthur",
   "fullName": "Arthur",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "A generic-purpose animated template letting you display most of the datasources using a more hierarchical approach.",
   "keywords": [
     "generic",
@@ -63,10 +63,11 @@
           "description": "A large background image that will fill the home screen.",
           "type": "string"
         },
-        "corporatelogo": {
-          "title": "Corporate Logo URL.",
-          "description": "A link to a logo image of your choice. Minimum size: 200x200. Ratios other than 1:1 are not yet supported.",
-          "type": "string"
+        "introanim": {
+          "title": "Intro Animation.",
+          "description": "Defines wether the intro animation will be played on the application's first launch.",
+          "type": "checkbox",
+          "value": true
         },
         "tabs": {
           "title": "tabs",
@@ -84,7 +85,10 @@
           "legend": "Style",
           "items": [
             "backgroundurl",
-            "corporatelogo"
+            {
+              "key": "introanim",
+              "value": "true"
+            }
           ]
         },
         {

@@ -418,21 +418,39 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
       showAnimated: function() {
         var self = this;
-        self.$el.show().addClass('shown').addClass('anim');
-        setTimeout(function(e) {
-          self.videoEnded(e)
-        }, 1600);
+        var theconf = Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && Joshfire.factory.config.template.options.introanim;
+        if(theconf) {
+          self.$el.show().addClass('shown');
+          $('#tableofcontent').show();
+          self.videoEnded();
+        }
+        else {
+          self.$el.show().addClass('shown').addClass('anim');
+          $('#tableofcontent').show();
+          setTimeout(function(e) {
+            self.videoEnded(e);
+          }, 1400);
+        }
       },
 
       videoEnded: function(e) {
         var self = this;
 
-        $('#tableofcontent').show();
+        $('#logo').remove();
         self.$el.addClass('anim2');
-        $('#introtext').remove();
         setTimeout(function(e) {
-          $('.anim').removeClass('anim');
-        }, 1600);
+          $('.anim').removeClass('anim').removeClass('anim2');
+          
+          // Sadly, let the DOM refresh
+          setTimeout(function() {
+            self.$el.addClass('anim3');
+            // Set the final, unvariable position
+            // of the li's
+            setTimeout(function() {
+              $('#content').addClass('scattered');
+            });
+          }, 100);
+        }, 1500);
       }
     }),
 
