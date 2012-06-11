@@ -34,7 +34,7 @@
         "devices": "tablet",
         "startfile": "index.optimized.html",
         "images": {
-          "small": "",
+          "small": "marketing/arthur(380-236).png",
           "big": ""
         },
         "orientation": "landscape",
@@ -47,7 +47,7 @@
         "devices": "desktop",
         "startfile": "index.optimized.html",
         "images": {
-          "small": "",
+          "small": "marketing/arthur(380-236)-2.png",
           "big": ""
         },
         "screenshots": [
@@ -85,8 +85,7 @@
           "items": [
             "backgroundurl",
             {
-              "key": "introanim",
-              "value": "true"
+              "key": "introanim"
             }
           ]
         },
