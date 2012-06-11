@@ -422,7 +422,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         if(Joshfire.factory && Joshfire.factory.config)
           theconf = Joshfire.factory.config.template.options.introanim;
         
-        if(Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && !Joshfire.factory.config.template.options.introanim) {
+        if(Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && Joshfire.factory.config.template.options.introanim) {
           self.$el.show().addClass('shown');
           $('#tableofcontent').show();
           self.videoEnded();

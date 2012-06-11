@@ -65,9 +65,8 @@
         },
         "introanim": {
           "title": "Intro Animation.",
-          "description": "Defines wether the intro animation will be played on the application's first launch.",
-          "type": "checkbox",
-          "value": true
+          "description": "Check to disable the intro animation which will be played on the application's first launch.",
+          "type": "checkbox"
         },
         "tabs": {
           "title": "tabs",
