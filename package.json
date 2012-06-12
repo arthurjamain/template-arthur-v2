@@ -11,7 +11,7 @@
     "premium": true,
     "prices": {
       "all": {
-        "devices":["desktop","tablet"],
+        "devices":["*"],
         "onetime":{
           "eur":49,
           "usd":59
