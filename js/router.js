@@ -32,14 +32,13 @@ function(Router, dataManager, uiManager, views, onReady) {
       * Start loading the data. Once this is done,
       * _onDataLoaded is called and you can safely use
       * dataManager.appTree in this context.
-      * TODO : del onready
       **/
       onReady(function() {
         self._loadData(function(tree) {
           // Set Configurations
           // Register all the datasources as backbone Models
           if (Joshfire.factory) {
-            uiManager.setGlobalConfig(Joshfire.factory.config)
+            uiManager.setGlobalConfig("Joshfire.factory.config");
             var tabs = Joshfire.factory.getDataSource('main');
             if(tabs && typeof tabs.children != 'undefined') {
               for(var k in tabs.children) {
@@ -94,7 +93,7 @@ function(Router, dataManager, uiManager, views, onReady) {
     viewHome: function() {
       var self = this;
       self._onDataLoaded = function() {
-
+        
         var data = dataManager.appTree;
 
         if (self.firstLaunch) {
@@ -106,8 +105,12 @@ function(Router, dataManager, uiManager, views, onReady) {
             listId: 'tableofcontent',
             itemType: 'home'
           });
-
-          uiManager.getContentView('contentRoot').showAnimated();
+          if(Modernizr.csstransforms3d) {
+            uiManager.getContentView('contentRoot').showAnimated();
+          }
+          else {
+            uiManager.getContentView('contentRoot').CShowAnimated(); 
+          }
 
         } else {
 
@@ -117,9 +120,7 @@ function(Router, dataManager, uiManager, views, onReady) {
           $('.theplayer', '.shown').remove();
 
           uiManager.setHomeLayout(function() {
-            //setTimeout(function() {
-              uiManager.slideContentPane('contentRoot', {direction: 'right'});
-            //}, 2000);
+            uiManager.slideContentPane('contentRoot', {direction: 'right'});
           });
         }
         self.previousContentLevel = 0;

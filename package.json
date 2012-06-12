@@ -32,7 +32,7 @@
     "devices": [
       {
         "devices": "tablet",
-        "startfile": "index.optimized.html",
+        "startfile": "index.ios.optimized.html",
         "images": {
           "small": "marketing/arthur(380-236).png",
           "big": ""
@@ -45,7 +45,7 @@
       },
       {
         "devices": "desktop",
-        "startfile": "index.optimized.html",
+        "startfile": "index.desktop.optimized.html",
         "images": {
           "small": "marketing/arthur(380-236)-2.png",
           "big": ""

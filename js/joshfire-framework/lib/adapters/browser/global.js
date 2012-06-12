@@ -19,7 +19,7 @@
   };
 
   /* Protect against forgotten console.logs */
-  if (window && typeof window.console === 'undefined') {
+/*  if (window && typeof window.console === 'undefined') {
   window.console = {
   'log': function() {},
   'message': function() {},
@@ -33,7 +33,7 @@
   'exception': function() {},
   'time': function() {}
   };
-  }
+  }*/
   
   /* THE HTML5 shim, taken from http://code.google.com/p/html5shim/source/browse/trunk/html5-els.js
   * with that, IE can apply styles to the HTML5 elements

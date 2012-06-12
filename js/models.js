@@ -88,12 +88,19 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
       find: function(opt, cb) {
         var self = this;
         this._find(opt, function(err, data) {
+          if(err) {
+            console.warn('Query to datasource could not be completed : '+err);
+            return;
+          }
+          
           for(var k in data.entries) {
             data.entries[k].path = self.get('path');
             self.get('children').add(new models.Element(data.entries[k]));
           }
+
           if(typeof self._onDataLoaded == 'function')
             self._onDataLoaded(self.get('children'));
+
           cb(err, self.get('children'));
         });
       },

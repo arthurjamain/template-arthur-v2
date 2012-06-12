@@ -147,9 +147,16 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             thevideo.attr('width', $('#content').width() - 100);
             $('.maincontent', self.$el).append(thevideo);
             $('iframe', self.$el).on('load', function() {
-              $('.maincontent .loader', self.$el).anim({opacity: 0}, 0.6, 'linear', function() {
-                $(this).remove();
-              });
+              if(Joshfire.framework.adapter == 'ios') {
+                $('.maincontent .loader', self.$el).anim({opacity: 0}, 0.6, 'linear', function() {
+                  $(this).remove();
+                });
+              }
+              else {
+                $('.maincontent .loader', self.$el).animate({opacity: 0}, 600, function() {
+                  $(this).remove();
+                });
+              }
             });
           }, 800);
         }
@@ -183,15 +190,14 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         var self = this;
 
         this.$parent = opt.$parent;
-        this.$el = $(this.el);
+        //this.$el = this.$parent;
         this.template = $('#image-template').html();
         //this.scrollable = opt.opt.scrollable;
       },
 
       renderTitle: function() {
         var self = this;
-        self.$el.append(_.template(self.titleTemplate, {title: self.model.get('name')}));
-        self.$parent.append(self.$el);
+        self.$parent.append(_.template(self.titleTemplate, {title: self.model.get('name')}));
       },
 
       generate: function(cb) {
@@ -203,12 +209,15 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         var self = this;
         var $html = $(html);
         var $theimg = $('<img src="'+self.model.get('contentURL')+'" />');
-        self.$el.append(html);
-        $('.maincontent', self.$el).append($theimg);
-        $('.innerContainer', self.$el).css({opacity: 0});
+        self.$parent.append(html);
+        $('.maincontent', self.$parent).append($theimg);
+        $('.innerContainer', self.$parent).css({opacity: 0});
         $theimg.on('load', function() {
-          $('.loader', self.$el).remove();
-          $('.innerContainer', self.$el).anim({opacity: 1}, 0.4, 'ease-in-out');
+          $('.loader', self.$parent).remove();
+          if(Joshfire.framework.adapter == 'ios')
+            $('.innerContainer', self.$parent).anim({opacity: 1}, 0.4, 'ease-in-out');
+          else
+            $('.innerContainer', self.$parent).animate({opacity: 1}, 400);
         });
       }
 
@@ -398,11 +407,12 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         if(Joshfire && Joshfire.factory) {
           // Set the background image.
           var bg = Joshfire.factory.config.template.options.backgroundurl;
-          if(bg) 
+          if(bg) {
             $('#'+opt.paneOptions.listId).css({
               background: '#F8F6F4 url('+bg+') no-repeat center center',
               backgroundSize: 'cover'
             });
+          }
 
           // Set the corporate logo.
           var logo = Joshfire.factory.config.app.logo;
@@ -413,7 +423,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             });
           }
         }
-
       },
 
       showAnimated: function() {
@@ -436,6 +445,26 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         }
       },
 
+      CShowAnimated: function() {
+        var self = this;
+        var theconf;
+        if(Joshfire.factory && Joshfire.factory.config)
+          theconf = Joshfire.factory.config.template.options.introanim;
+        
+        if(Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && Joshfire.factory.config.template.options.introanim) {
+          self.$el.show().addClass('shown');
+          $('#tableofcontent').show();
+          self.videoEnded();
+        }
+        else {
+          self.$el.show().addClass('shown').addClass('anim');
+          $('#tableofcontent').show();
+          setTimeout(function(e) {
+            self.CVideoEnded(e);
+          }, 1400);
+        }
+      },
+
       videoEnded: function(e) {
         var self = this;
         $('#logo').remove();
@@ -452,6 +481,12 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             });
           }, 100);
         }, 1600);
+      },
+
+      CVideoEnded: function() {
+        var self = this;
+        self.$el.removeClass('anim');
+        $('#content').addClass('cscattered');
       }
     }),
 
@@ -542,7 +577,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         url = url.join("/");
         document.location.hash = url;
         return false;
-      },
+      }
     }),
 
     // a list representing a collection.
@@ -593,20 +628,24 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       enhance: function() {
         var self = this;
         
-        $('a', this.itemOptions.$parent).each(function(el) {
-          var tap = new Tap(this);
-          this.removeEventListener('tap', self.taphandle);
-          this.addEventListener('tap', self.taphandle);
-          this.removeEventListener('click', self.clickhandle);
-          this.addEventListener('click', self.clickhandle);
-        });
-
+        if(Joshfire.framework.adapter == 'ios') {
+          $('a', this.itemOptions.$parent).each(function(el) {
+            var tap = new Tap(this);
+            this.removeEventListener('tap', self.taphandle);
+            this.addEventListener('tap', self.taphandle);
+            this.removeEventListener('click', self.clickhandle);
+            this.addEventListener('click', self.clickhandle);
+          });
+        }
+        else {
+          $('a', this.itemOptions.$parent).click(self.taphandle);
+        }
       },
 
       taphandle: function(e) {
         var thelink = e.target;
         while(!thelink.href) {
-          thelink = thelink.parentElement;
+          thelink = thelink.parentElement || thelink.parentNode;
         }
         
         document.location = thelink.href;
@@ -705,7 +744,10 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         setTimeout(function() {
           //var offset = self.$el.width()/2 - $('img', self.$el)[0].width/2;
           //$('img', self.$el).css({'margin-left': offset+'px'});
-          self.$el.anim({opacity: 1}, 0.4, 'linear');
+          if(Joshfire.framework.adapter == "ios")
+            self.$el.anim({opacity: 1}, 0.4, 'linear');
+          else
+            self.$el.animate({opacity: 1}, 400);
         }, 0);
       },
 
@@ -718,14 +760,20 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
         setTimeout(function() {
           $('.content', self.$el).html(_.template(self.videoTemplate, {src: url, width: thespec.width, height: thespec.height}));
-          self.$el.anim({opacity: 1}, 0.4, 'linear');
+          if(Joshfire.framework.adapter == "ios")
+            self.$el.anim({opacity: 1}, 0.4, 'linear');
+          else
+            self.$el.animate({opacity: 1}, 400);
         }, 0);
       },
 
       setText: function(text) {
         this.$el.show().css({opacity: 0});
         $('.content', this.$el).html(text);
-        this.$el.anim({opacity: 1}, 0.4, 'linear');
+        if(Joshfire.framework.adapter == "ios")
+          self.$el.anim({opacity: 1}, 0.4, 'linear');
+        else
+          self.$el.animate({opacity: 1}, 400);
       },
 
       generate: function(cb) {
@@ -744,10 +792,16 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         var self = this;
         this.$el.hide();
         $('.close', this.$el).bind('click', function(e) {
-          self.$el.anim({opacity: 0}, 0.4, 'linear', function() {
+          
+          var cb = function() {
             $('.content', self.$el).empty();
             self.$el.css({"opacity": "1", "display": "none"});
-          });
+          };
+
+          if(Joshfire.framework.adapter == "ios")
+            self.$el.anim({opacity: 1}, 0.4, 'linear', cb);
+          else
+            self.$el.animate({opacity: 1}, 400, cb);
         });
       }
     })

@@ -26,6 +26,9 @@ function($, _, views) {
       this.popup = new views.popup();
       window.popup = this.popup;
 
+      if(!Modernizr.csstransforms3d)
+        this.slideContentPane = this.CSlideContentPane;
+
       /**
       * Handle window resize.
       **/
@@ -146,9 +149,8 @@ function($, _, views) {
         to = 'taway';
       }
 
-      this.contentPanes[id].$el.attr('class', 'notransition '+from).addClass(from);
-      this.contentPanes[id].$el.show();
-      
+      self.contentPanes[id].$el.attr('class', 'notransition '+from).addClass(from);
+      self.contentPanes[id].$el.show();
       $prevSlide.attr('class', to+' shown').removeClass('shown');
       self.contentPanes[id].$el.removeClass('notransition').addClass('shown');
       
@@ -164,6 +166,25 @@ function($, _, views) {
       }, 500);
 
     },
+    // Sliding animation
+    // slides away the shown element and shown the asked one
+    CSlideContentPane: function(id, opt, cb) {
+      var self = this;
+      var $prevSlide = $('.shown');
+
+      this.contentPanes[id].$el.show();
+      
+      $prevSlide.hide().removeClass('shown');
+      self.contentPanes[id].$el.addClass('shown');
+      
+      // Delete the prev slide, except the home
+      if($prevSlide.attr('id') != 'contentRoot')
+        $prevSlide.remove();
+
+      if(typeof cb != 'undefined')
+        cb();
+      
+    },
 
     /**
     * These functions switch the layout between root content
@@ -174,41 +195,51 @@ function($, _, views) {
       
       $('#content').css({width: '100%'});
 
-      self.staticViews.app.sidebar.$el.removeClass('visible');
-      self.staticViews.app.content.$el.removeClass('shrinked');
-      
-
-      setTimeout(function() {
+      if(Modernizr.csstransforms3d) {
+        self.staticViews.app.sidebar.$el.removeClass('visible');
+        self.staticViews.app.content.$el.removeClass('shrinked');
+        setTimeout(function() {
+          if(typeof cb != 'undefined')
+            cb();
+        }, 1000);
+      }
+      else {
+        self.staticViews.app.sidebar.$el.css({left: -self.staticViews.app.sidebar.$el.width()});
+        self.staticViews.app.content.$el.css({left: 0});
         if(typeof cb != 'undefined')
           cb();
-      }, 1000);
+      }
     },
 
     setRegularLayout: function() {
       var self = this;
 
       var thewidth = $(window).width() - self.staticViews.app.sidebar.$el.width();
+      
       $('#content').css({width: thewidth});
-      self.staticViews.app.sidebar.$el.addClass('visible');
-      /*self.staticViews.app.sidebar.$el.anim({translate3d: '287px, 0, 0'}, 0.5, 'ease-in-out', function() {
-        
-      });*/
-      self.staticViews.app.content.$el.addClass('shrinked');
-      /*self.staticViews.app.content.$el.anim({translate3d: '287px, 0, 0'}, 0.5, 'ease-in-out', function() {
-        
-      });*/
+      
+      if(Modernizr.csstransforms3d) {
+        self.staticViews.app.sidebar.$el.addClass('visible');
+        self.staticViews.app.content.$el.addClass('shrinked');
+      }
+      else {
+        self.staticViews.app.sidebar.$el.css({left: 0});
+        self.staticViews.app.content.$el.css({left: self.staticViews.app.sidebar.$el.width()});
+      }
     },
 
     /**
     * 
     **/
     setGlobalConfig: function(conf) {
-      if(conf.app.name) 
-        $('title').html(conf.app.name);
-      if(conf.app.icon)
-        $('#thefavicon').attr('href', conf.app.icon.contentURL);
-      if(conf.template.options.backgroundurl)
-        $('#tableofcontent').css({background: 'url('+conf.template.options.backgroundurl+')'});
+      if(conf && conf.app && conf.template) {
+        if(conf.app.name) 
+          $('title').html(conf.app.name);
+        if(conf.app.icon)
+          $('#thefavicon').attr('href', conf.app.icon.contentURL);
+        if(conf.template.options.backgroundurl)
+          $('#tableofcontent').css({background: 'url('+conf.template.options.backgroundurl+')'});
+      }
     },
 
     /**
