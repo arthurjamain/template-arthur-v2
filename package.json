@@ -11,7 +11,7 @@
     "premium": true,
     "prices": {
       "all": {
-        "devices":["desktop","tablet"],
+        "devices":["*"],
         "onetime":{
           "eur":49,
           "usd":59
@@ -33,10 +33,7 @@
       {
         "devices": "tablet",
         "startfile": "index.ios.optimized.html",
-        "images": {
-          "small": "marketing/arthur(380-236).png",
-          "big": ""
-        },
+        "images": "marketing/arthur(380-236).png",
         "orientation": "landscape",
         "screenshots": [
           "marketing/screenshot_ipad_1.png",
@@ -46,10 +43,7 @@
       {
         "devices": "desktop",
         "startfile": "index.desktop.optimized.html",
-        "images": {
-          "small": "marketing/arthur(380-236)-2.png",
-          "big": ""
-        },
+        "images": "marketing/arthur(380-236)-2.png",
         "screenshots": [
           "marketing/screenshot_desktop_1.png",
           "marketing/screenshot_desktop_2.png"
