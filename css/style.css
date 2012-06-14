@@ -484,13 +484,13 @@ blockquote {
   display: block;
   width: 59px;
   height: 145px;
-  background: transparent url('../img/btn-back-home-small.png') no-repeat top left;
+  background: transparent url('../img/btn-back-home-small-blue.png') no-repeat top left;
   margin: 0;
   background-size: 59px 145px;
 }
 
 #sidebar .back.retina {
-  background-image: url('../img/btn-back-home.png');
+  background-image: url('../img/btn-back-home-blue.png');
 }
 
 #sidebar header {
@@ -509,7 +509,7 @@ blockquote {
   padding-left: 30px;
   min-width:180px;
   margin-top: 10px;
-  color: #CB9A04;
+  color: #8ca6c3;
   font-size: 21px;
   font-weight: normal;
 }
@@ -558,7 +558,7 @@ blockquote {
   width: 100%;
   border-bottom: 1px solid #272626;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  background: transparent url('../img/img-arrow-title-small.png') no-repeat -60px center;
+  background: transparent url('../img/img-arrow-title-small-blue.png') no-repeat -60px center;
   -webkit-transition: background-position 0.4s;
   -moz-transition: background-position 0.4s;
   background-size: 60px 68px;
@@ -566,7 +566,7 @@ blockquote {
 }
 
 #sidebar .list li.retina {
-  background-image: url('../img/img-arrow-title.png');
+  background-image: url('../img/img-arrow-title-blue.png');
 }
 
 #sidebar .list li.selected {
@@ -706,7 +706,7 @@ blockquote {
 
 #contentRoot #tableofcontent li/*:not(:first-child)*/ h3:first-line {
   font-weight: normal;
-  color: #CB9A04;
+  color: #8ca6c3;
 }
 
 #content .mediacontainer iframe {
