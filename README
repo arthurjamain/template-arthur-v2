@@ -1,3 +1,9 @@
-Use the following line to minify the app :
+To minify/pack :
 
 node js/joshfire-framework/scripts/optimize.js ios app
+rename app.optimized.js to app.ios.optimized.js
+
+then :
+
+node js/joshfire-framework/scripts/optimize.js browser app
+rename app.optimized.js to app.desktop.optimized.js
