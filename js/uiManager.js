@@ -232,8 +232,6 @@ function($, _, views) {
     * 
     **/
     setGlobalConfig: function(conf) {
-      console.log(conf);
-      alert("ok");
       if(conf && conf.app && conf.template) {
         if(conf.app.name) 
           $('title').html(conf.app.name);

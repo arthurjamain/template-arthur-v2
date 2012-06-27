@@ -37,7 +37,9 @@ function(Router, dataManager, uiManager, views, onReady) {
         self._loadData(function(tree) {
           // Set Configurations
           // Register all the datasources as backbone Models
+          console.log("ok", Joshfire);
           if (Joshfire.factory) {
+            console.log(Joshfire);
             uiManager.setGlobalConfig(Joshfire.factory.config);
             var tabs = Joshfire.factory.getDataSource('main');
             if(tabs && typeof tabs.children != 'undefined') {
@@ -310,16 +312,20 @@ function(Router, dataManager, uiManager, views, onReady) {
     _loadData: function(cb) {
       var self = this;
       // Security to avoid multiple queries
+      console.log(self.loadStarted);
       if (!self.loadStarted) {
+        console.log("okloaddatast");
         self.loadStarted = true;
         // Start the query
         dataManager.loadDataTree(function(tree) {
+          console.log('loaddatabeforecb');
           self.loadFinished = true;
           if (typeof cb == 'function') {
+            console.log('loaddatacb1');
             cb(tree);
           }
-
           if (typeof self._onDataLoaded == 'function') {
+            console.log('loaddatacb2');
             self._onDataLoaded(tree);
           }
         });
