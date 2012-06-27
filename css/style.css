@@ -484,7 +484,7 @@ blockquote {
   display: block;
   width: 59px;
   height: 145px;
-  background: transparent url('../img/btn-back-home-small-blue.png') no-repeat top left;
+  background: transparent url('../img/btn-back-home-small-red.png') no-repeat top left;
   margin: 0;
   background-size: 59px 145px;
 }
@@ -506,10 +506,11 @@ blockquote {
   top: 0;
   left: 60px;
   right: 0;
-  padding-left: 30px;
+  padding: 0 30px;
   min-width:180px;
   margin-top: 10px;
-  color: #8ca6c3;
+  /** 8ca6c3 **/
+  color: #ff2b06;
   font-size: 21px;
   font-weight: normal;
 }
@@ -558,7 +559,7 @@ blockquote {
   width: 100%;
   border-bottom: 1px solid #272626;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  background: transparent url('../img/img-arrow-title-small-blue.png') no-repeat -60px center;
+  background: transparent url('../img/img-arrow-title-small-red.png') no-repeat -60px center;
   -webkit-transition: background-position 0.4s;
   -moz-transition: background-position 0.4s;
   background-size: 60px 68px;
@@ -602,7 +603,6 @@ blockquote {
   line-height: 25px;
   vertical-align: middle;
   display: table-cell;
-  word-break: break-all;
 }
 
 #sidebar .list .count {
@@ -666,7 +666,7 @@ blockquote {
 
 #contentRoot #tableofcontent li{
   position: absolute;
-  width: 20% !important;
+  width: 10% !important;
   height: 25%;
   margin: 0;
   padding: 0;
@@ -706,7 +706,7 @@ blockquote {
 
 #contentRoot #tableofcontent li/*:not(:first-child)*/ h3:first-line {
   font-weight: normal;
-  color: #8ca6c3;
+  color: #ff2b06;
 }
 
 #content .mediacontainer iframe {
@@ -878,9 +878,9 @@ blockquote {
 
 .anim3 #tableofcontent li:nth-child(2),
 .scattered #tableofcontent li:nth-child(2) {
-  -webkit-transform: translate3d(200%, -100%, 0);
+  -webkit-transform: translate3d(100%, -100%, 0);
   -webkit-transition: -webkit-transform 0.5s;
-  -moz-transform: translate3d(200%, -100%, 0);
+  -moz-transform: translate3d(100%, -100%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
 
@@ -939,6 +939,94 @@ blockquote {
   -moz-transition: -moz-transform 0.5s;
 }
 
+.anim3 #tableofcontent li:nth-child(10),
+.scattered #tableofcontent li:nth-child(10) {
+  -webkit-transform: translate3d(200%, 0%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(200%, 0%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(11),
+.scattered #tableofcontent li:nth-child(11) {
+  -webkit-transform: translate3d(300%, -100%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(300%, -100%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(12),
+.scattered #tableofcontent li:nth-child(12) {
+  -webkit-transform: translate3d(400%, 0%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(400%, 0%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(13),
+.scattered #tableofcontent li:nth-child(13) {
+  -webkit-transform: translate3d(500%, -100%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(500%, -100%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(14),
+.scattered #tableofcontent li:nth-child(14) {
+  -webkit-transform: translate3d(300%, 100%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(300%, 100%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(15),
+.scattered #tableofcontent li:nth-child(15) {
+  -webkit-transform: translate3d(500%, 100%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(500%, 100%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(16),
+.scattered #tableofcontent li:nth-child(16) {
+  -webkit-transform: translate3d(400%, 200%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(400%, 200%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(17),
+.scattered #tableofcontent li:nth-child(17) {
+  -webkit-transform: translate3d(-300%, -100%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(-300%, -100%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(18),
+.scattered #tableofcontent li:nth-child(18) {
+  -webkit-transform: translate3d(-400%, 0%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(-400%, 0%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(19),
+.scattered #tableofcontent li:nth-child(19) {
+  -webkit-transform: translate3d(-300%, -100%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(-300%, -100%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
+.anim3 #tableofcontent li:nth-child(20),
+.scattered #tableofcontent li:nth-child(20) {
+  -webkit-transform: translate3d(-400%, 200%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transform: translate3d(-400%, 200%, 0);
+  -moz-transition: -moz-transform 0.5s;
+}
+
 /** Compatibility positioning **/
 
 .cscattered #tableofcontent li:nth-child(1) {
@@ -949,7 +1037,7 @@ blockquote {
 
 .cscattered #tableofcontent li:nth-child(2) {
   top: 0px;
-  left: 80%;
+  left: 60%;
   z-index: 38;
 }
 
@@ -992,7 +1080,13 @@ blockquote {
 .cscattered #tableofcontent li:nth-child(9) {
   top: 75%;
   left: 80%;
-  z-index: 32;
+  z-index: 31;
+}
+
+.cscattered #tableofcontent li:nth-child(10) {
+  top: 25%;
+  left: 80%;
+  z-index: 30;
 }
 
 #logo,
