@@ -339,6 +339,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
       enhance: function() {
         var self = this;
+        $('a[rel="nofollow"]', self.$el).remove();
       }
 
     }),
