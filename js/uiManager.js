@@ -235,8 +235,10 @@ function($, _, views) {
       if(conf && conf.app && conf.template) {
         if(conf.app.name) 
           $('title').html(conf.app.name);
-        if(conf.app.icon)
+        if(conf.app.icon) {
           $('#thefavicon').attr('href', conf.app.icon.contentURL);
+          $('#apple-icon').attr('href', conf.app.icon.contentURL);
+        }
         if(conf.template.options.backgroundurl)
           $('#tableofcontent').css({background: 'url('+conf.template.options.backgroundurl+')'});
       }

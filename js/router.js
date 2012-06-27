@@ -38,7 +38,7 @@ function(Router, dataManager, uiManager, views, onReady) {
           // Set Configurations
           // Register all the datasources as backbone Models
           if (Joshfire.factory) {
-            uiManager.setGlobalConfig("Joshfire.factory.config");
+            uiManager.setGlobalConfig(Joshfire.factory.config);
             var tabs = Joshfire.factory.getDataSource('main');
             if(tabs && typeof tabs.children != 'undefined') {
               for(var k in tabs.children) {
