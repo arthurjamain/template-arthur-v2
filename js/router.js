@@ -211,6 +211,9 @@ function(Router, dataManager, uiManager, views, onReady) {
         return;
       }
 
+      if($('.shown').attr('id') == contentid)
+        return;
+
       // Put it in onDataLoaded in case data isn't loaded yet.
       self._onDataLoaded = function() {
 
@@ -233,6 +236,7 @@ function(Router, dataManager, uiManager, views, onReady) {
         // to determine the direction of the slide
         var curPaneIndex = rootModel.collection.indexOf(rootModel),
             direction = '';
+
         direction = (curPaneIndex < self.previousContentIndex)?'bottom':'top';
 
         // If we previously were deeper
