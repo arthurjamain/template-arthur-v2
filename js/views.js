@@ -128,6 +128,17 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           });
           self.child.render();
         }
+        else if(opt.data.get('@type') == 'ExternalResource') {
+          self.child = new views.mysteryIFrame({
+            model: opt.data,
+            opt: opt.paneOptions,
+            $parent: self.$el
+          });
+          // Wait transition end
+          setTimeout(function() {
+            self.child.render();
+          }, 1000)
+        }
         else {
           self.child = new views.mysteryBlogPost({
             model: opt.data,
@@ -489,6 +500,28 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         self.$el.removeClass('anim');
         $('#content').addClass('cscattered');
       }
+    }),
+
+    // An External Resource
+    mysteryIFrame: View.extend({
+      el: '<iframe>',
+      $parent: null,
+      attributes: {
+        url: ''
+      },
+
+      initialize: function(opt) {
+        var self = this;
+        self.$parent = opt.$parent;
+      },
+
+      render: function() {
+        var self = this;
+        self.el.src = self.model.get('contentURL');
+        $(self.el).css({width: '100%', height: '100%'})
+        self.$parent.html(self.el);
+      }
+
     }),
 
     // A List container panel

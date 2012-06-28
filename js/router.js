@@ -147,7 +147,6 @@ function(Router, dataManager, uiManager, views, onReady) {
 
       //Get the right data
       var rootModel = dataManager.getDataFromPath(sidebarid);
-
       // Put it in onDataLoaded in case data isn't loaded yet.
       rootModel._onDataLoaded = function(col) {
         //Show the app if it's hidden
@@ -161,16 +160,25 @@ function(Router, dataManager, uiManager, views, onReady) {
           itemType: 'sidebar'
         });
 
-        var firstChapter = col.first();
+        var firstChapter = col.first(),
+            viewOpt = {
+              container: 'content',
+              id: firstChapter.get('guid'),
+              title: firstChapter.get('name'),
+              showDescription: true,
+              titleType: 'big',
+              scrollable: true
+            }
+
+        if(col.models[0].get('@type') == 'ExternalResource') {
+          viewOpt.iframe = true;
+        }
+        else {
+
+        }
+
         //Get or create the content view
-        var theview = uiManager.setContentView(firstChapter, {
-          container: 'content',
-          id: firstChapter.get('guid'),
-          title: firstChapter.get('name'),
-          showDescription: true,
-          titleType: 'big',
-          scrollable: true
-        });
+        var theview = uiManager.setContentView(firstChapter, viewOpt);
         uiManager.setSelectedSidebarItem(firstChapter.get('guid'));
         //If we previously were on the same level
         // but on a different element
@@ -210,6 +218,9 @@ function(Router, dataManager, uiManager, views, onReady) {
         Backbone.history.navigate('/view', true);
         return;
       }
+
+      if($('.shown').attr('id') == contentid)
+        return;
 
       // Put it in onDataLoaded in case data isn't loaded yet.
       self._onDataLoaded = function() {
