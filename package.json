@@ -8,16 +8,7 @@
     "hierarchical"
   ],
   "joshfire": {
-    "premium": true,
-    "prices": {
-      "all": {
-        "devices":["*"],
-        "onetime":{
-          "eur":49,
-          "usd":59
-        }
-      }
-    },
+    "premium": false,
     "images": {
       "small": "marketing/arthur(380-236)-3.png",
       "big": "marketing/arthur(700-335).png"
