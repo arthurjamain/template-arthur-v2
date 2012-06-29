@@ -492,7 +492,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
               $('#content').addClass('scattered');
             });
           }, 100);
-        }, 1600);
+        }, 0);
       },
 
       CVideoEnded: function() {
