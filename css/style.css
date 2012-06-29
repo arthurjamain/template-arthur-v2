@@ -1012,9 +1012,9 @@ blockquote {
 
 .anim3 #tableofcontent li:nth-child(15),
 .scattered #tableofcontent li:nth-child(15) {
-  -webkit-transform: translate3d(-300%, -100%, 0);
+  -webkit-transform: translate3d(-300%, 100%, 0);
   -webkit-transition: -webkit-transform 0.5s;
-  -moz-transform: translate3d(-300%, -100%, 0);
+  -moz-transform: translate3d(-300%, 100%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
 
