@@ -57,9 +57,9 @@
           "title": "tabs",
           "type": "tabarray",
           "items": {
-              "title": "Tab title (max. 20 characters)",
+              "title": "Tab title (max. 40 characters)",
               "type": "string",
-              "maxLength": 20
+              "maxLength": 40
             }
         }
       },

@@ -954,16 +954,16 @@ blockquote {
   -moz-transition: -moz-transform 0.5s;
 }
 
-.anim3 #tableofcontent li:nth-child(12),
-.scattered #tableofcontent li:nth-child(12) {
+.anim3 #tableofcontent li:nth-child(17),
+.scattered #tableofcontent li:nth-child(17) {
   -webkit-transform: translate3d(400%, 0%, 0);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transform: translate3d(400%, 0%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
 
-.anim3 #tableofcontent li:nth-child(13),
-.scattered #tableofcontent li:nth-child(13) {
+.anim3 #tableofcontent li:nth-child(18),
+.scattered #tableofcontent li:nth-child(18) {
   -webkit-transform: translate3d(500%, -100%, 0);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transform: translate3d(500%, -100%, 0);
@@ -978,40 +978,40 @@ blockquote {
   -moz-transition: -moz-transform 0.5s;
 }
 
-.anim3 #tableofcontent li:nth-child(15),
-.scattered #tableofcontent li:nth-child(15) {
+.anim3 #tableofcontent li:nth-child(19),
+.scattered #tableofcontent li:nth-child(19) {
   -webkit-transform: translate3d(500%, 100%, 0);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transform: translate3d(500%, 100%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
 
-.anim3 #tableofcontent li:nth-child(16),
-.scattered #tableofcontent li:nth-child(16) {
+.anim3 #tableofcontent li:nth-child(13),
+.scattered #tableofcontent li:nth-child(13) {
   -webkit-transform: translate3d(400%, 200%, 0);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transform: translate3d(400%, 200%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
 
-.anim3 #tableofcontent li:nth-child(17),
-.scattered #tableofcontent li:nth-child(17) {
+.anim3 #tableofcontent li:nth-child(12),
+.scattered #tableofcontent li:nth-child(12) {
   -webkit-transform: translate3d(-300%, -100%, 0);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transform: translate3d(-300%, -100%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
 
-.anim3 #tableofcontent li:nth-child(18),
-.scattered #tableofcontent li:nth-child(18) {
+.anim3 #tableofcontent li:nth-child(16),
+.scattered #tableofcontent li:nth-child(16) {
   -webkit-transform: translate3d(-400%, 0%, 0);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transform: translate3d(-400%, 0%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
 
-.anim3 #tableofcontent li:nth-child(19),
-.scattered #tableofcontent li:nth-child(19) {
+.anim3 #tableofcontent li:nth-child(15),
+.scattered #tableofcontent li:nth-child(15) {
   -webkit-transform: translate3d(-300%, -100%, 0);
   -webkit-transition: -webkit-transform 0.5s;
   -moz-transform: translate3d(-300%, -100%, 0);

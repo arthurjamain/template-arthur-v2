@@ -199,7 +199,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
       initialize: function(opt) {
         var self = this;
-
         this.$parent = opt.$parent;
         //this.$el = this.$parent;
         this.template = $('#image-template').html();
@@ -300,6 +299,13 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         if(this.model.get('articleBody')) {
           this.model.attributes.articleBody = this.model.get('articleBody').replace('src="//', 'src="http://');
           this.model.attributes.articleBody = this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="');
+          
+          // Thanks, Huffpost's crappy encoding
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&copy;/gi, 'é');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&nbsp;/gi, 'à');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&sup1;/gi, 'ù');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&uml;/gi, 'è');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Acirc;&nbsp;/gi, '');
         }
 
         // Add the title
@@ -572,8 +578,18 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           // this selects the kind of view to create as
           // a list item
           itemFactory: function(model, offset) {
-            if(opt.paneOptions.itemType == 'sidebar')
+            if(opt.paneOptions.itemType == 'sidebar') {
+              /**
+              * This hack corrects Flickr's terrible file
+              * name format
+              **/
+              if(model.get('@type') == 'ImageObject' && model.get('url').indexOf('flickr') > 0) {
+                model.attributes.name = model.get('name').split('_').shift();
+                model.attributes.name = model.get('name').split(/(?=[A-Z])/).join(' ');
+              }
+
               return new views.mysterySidebarItem({model: model});
+            }
             if(opt.paneOptions.itemType == 'home')
               return new views.mysteryHomeItem({model: model});
 
