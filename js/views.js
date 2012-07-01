@@ -345,8 +345,8 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         setTimeout(function() {
           $('.spinner', self.$el).remove();
           self.$el.append(copy);
-          $('.blogpaneInnerContainer', self.$el).hide();
-          $('.blogpaneInnerContainer', self.$el).fadeIn(400);
+          $('.blogpaneInnerContainer', self.$el).css({opacity: 0});
+          $('.blogpaneInnerContainer', self.$el).animate({opacity: 1}, 400);
         }, 800);
 
         /*
