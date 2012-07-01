@@ -278,7 +278,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
     mysteryBlogPost: View.extend({
       el: '<div class="blogPost"></div>',
       $el: null,
-      template: '<%=title%><div class="blogpaneInnerContainer innerContainer" id="<%=scrollId%>"><article><%=model.get("articleBody")%></article></div>',
+      template: '<%=title%><div class="spinner"></div><div class="blogpaneInnerContainer innerContainer" id="<%=scrollId%>"><article><%=model.get("articleBody")%></article></div>',
       titleTemplate: '<h4><%=title%></h4>',
       subTitleTemplate: '<h5><%=title%></h4>',
       rubricTitleTemplate: '<h6><%=title%></h4>',
@@ -335,8 +335,19 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         var self = this;
         var $html = $(html);
         $('img', $html).hide();
+        var spinner = '<div class="spinner"></div>';
         self.$el.append(html);
+
+        var copy = $('.blogpaneInnerContainer', self.$el).clone();
+        $('.blogpaneInnerContainer', self.$el).remove();
         self.$parent.append(self.$el);
+        
+        setTimeout(function() {
+          $('.spinner', self.$el).remove();
+          self.$el.append(copy);
+          copy.hide();
+          copy.fadeIn(400);
+        }, 800);
 
         /*
         if(self.scrollable) {
