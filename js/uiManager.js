@@ -234,7 +234,7 @@ function($, _, views) {
     setGlobalConfig: function(conf) {
       if(conf && conf.app && conf.template) {
         if(conf.app.name) 
-          $('title').html(conf.app.name);
+          document.title = conf.app.name;
         if(conf.app.icon) {
           $('#thefavicon').attr('href', conf.app.icon.contentURL);
           $('#apple-icon').attr('href', conf.app.icon.contentURL);
