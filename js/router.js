@@ -149,6 +149,10 @@ function(Router, dataManager, uiManager, views, onReady) {
       var rootModel = dataManager.getDataFromPath(sidebarid);
       // Put it in onDataLoaded in case data isn't loaded yet.
       rootModel._onDataLoaded = function(col) {
+
+
+        $('.GSpinner').remove();
+
         //Show the app if it's hidden
         uiManager.showPart('app');
         //Clear the sidebar's content and set the new one
@@ -205,6 +209,9 @@ function(Router, dataManager, uiManager, views, onReady) {
       if(rootModel.firstLoading) {
         rootModel._onDataLoaded(rootModel.get('children'));
         rootModel._onDataLoaded = null;
+      }
+      else {
+        $('body').append('<div class="GSpinner"></div>');
       }
     },
 

@@ -347,6 +347,8 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           self.$el.append(copy);
           $('.blogpaneInnerContainer', self.$el).css({opacity: 0});
           $('.blogpaneInnerContainer', self.$el).animate({opacity: 1}, 400);
+          $('a[rel=nofollow]', self.$el).remove();
+
         }, 800);
 
         /*

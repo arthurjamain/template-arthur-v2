@@ -131,19 +131,6 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
     * A Collection of items
     **/
     Elements: Backbone.Collection.extend({
-      
-      comparator: function(el) {
-        // Find the first int in the name of the element.
-        // It is supposed to be the index of the post
-        // (client validated convention, specific)
-        var m = /(\d+)/.exec(el.get('name'));
-        if(m && m.length) {
-          m = m.shift();
-          return parseInt(m);
-        }
-        return 0;
-        
-      },
 
       getFirstChapter: function() {
         for(var i in this.models) {
