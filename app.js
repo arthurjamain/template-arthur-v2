@@ -23,8 +23,22 @@ function(onReady, router) {
 
   
   onReady(function() {
+
+    /**
+    *
+    * If the user's browser is too old we kindly
+    * inform him that lolno. Else, we start the app
+    * with backbone's router.
+    **/
     
-    router.historyStart();
+    if($('html').attr('class').indexOf('disabled') > -1) {
+      $('body').css({'background': 'transparent url(../img/img-background-sidebar.png) repeat top left'})
+      $('body').html('<h1>This application is unavailable for your current browser. <br />Please consider upgrading to a newer version.</h1>');
+      return;
+    }
+    else {
+      router.historyStart();
+    }
 
     document.addEventListener("deviceready", function() {
       //cordova.exec(null, null, "SplashScreen", "hide", []);

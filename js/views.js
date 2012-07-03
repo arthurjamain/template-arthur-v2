@@ -457,12 +457,14 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           itemOptions: {
             $parent: self.listContainer,
             listId: opt.paneOptions.listId,
-            listClasses: opt.paneOptions.listClasses
+            listClasses: opt.paneOptions.listClasses,
+            homepage: true
           }
         });
 
         // Render the data list
-        self.child.render();
+        if(Joshfire.framework.adapter != 'desktop')
+          self.child.render();
         // Hide the list at first
         $('#'+opt.paneOptions.listId).hide();
 
@@ -486,7 +488,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           }
         }
       },
-
       showAnimated: function() {
         var self = this;
         var theconf;
@@ -513,7 +514,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         if(Joshfire.factory && Joshfire.factory.config)
           theconf = Joshfire.factory.config.template.options.introanim;
         
-        if(Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && Joshfire.factory.config.template.options.introanim) {
+        if(Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && Joshfire.factory.config.template.options.introanim && Modernizr.csstransforms3d) {
           self.$el.show().addClass('shown');
           $('#tableofcontent').show();
           self.videoEnded();
@@ -521,9 +522,15 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         else {
           self.$el.show().addClass('shown').addClass('anim');
           $('#tableofcontent').show();
-          setTimeout(function(e) {
-            self.CVideoEnded(e);
-          }, 1400);
+          var time = 0;
+          if(!Joshfire.factory.config.template.options.introanim) {
+            setTimeout(function(e) {
+              self.CVideoEnded(e);
+            }, 1400);
+          }
+          else {
+            self.CVideoEnded(null);
+          }
         }
       },
 
@@ -691,7 +698,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
       // setContent is called by render(). It sets the content ...
       setContent: function(html) {
-
         $('ul', this.itemOptions.$parent).remove();
         var self = this,
             $html = $(html),
@@ -702,7 +708,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         * Wait for the end of the animation to load the
         * rest of the list into the DOM.
         **/
-        if(thelis.length > 5) {
+        if(thelis.length > 5 && !theopt.homepage) {
           $('li', $html).remove();
           $html.append(thelis.slice(0, 5));
 
