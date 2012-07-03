@@ -239,8 +239,15 @@ function($, _, views) {
           $('#thefavicon').attr('href', conf.app.icon.contentURL);
           $('#apple-icon').attr('href', conf.app.icon.contentURL);
         }
-        if(conf.template.options.backgroundurl)
-          $('#tableofcontent').css({background: 'url('+conf.template.options.backgroundurl+')'});
+
+        if(conf.template.options.backgroundurl) {
+          setTimeout(function() {
+            $('#tableofcontent').css({
+              background: 'transparent url('+conf.template.options.backgroundurl+') no-repeat top left', 
+              backgroundSize: 'cover'
+            });
+          });
+        }
       }
     },
 

@@ -23,7 +23,7 @@
             <a href="#/view" class="back"></a>
             <h2></h2>
           </header>
-          <div class="list"></div>
+          <div id="sidebarlist" class="list"></div>
         </section>
         <section id="content"></section>
       </div>
@@ -108,41 +108,42 @@
     </script>
 
     <script type="text/template" id="image-template">
-        <div class="imagepaneInnerContainer innerContainer">
-          <div class="maincontent">
+        <div class="scrollwrapper">
+          <div class="imagepaneInnerContainer innerContainer">
+            <div class="maincontent">
 
-          </div>
-          <div class="subcontent">
-            <article>
-              <% if(item.author) { %>
-                <% if(item.author.length)
-                  theauthor = item.author.pop();
-                  %>
-                <header>
-                  <% if(theauthor.thumbnail && theauthor.thumbnail.length) { %>
-                    <img src="<%=theauthor.thumbnail[0].contentURL%>" alt="Author's picture" />
-                  <% } %>
-                  <% if(theauthor.url) { %>
-                    <span class="author">By <a target="_blank" href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
-                  <% } else { %>
-                    <span class="author">By <%=theauthor.name%></span>
-                  <% } %>
-                  <%
-                    thedate = item.dateCreated || item.datePublished; 
-                    if(thedate) { %>
-                    <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
-                  <% } %>
-                </header>
-              <% } %>
-              <% if(item.description) { %>
-                <section>
-                  <%=item.description%>
-                </section>
-              <% } %>
-            </article>
+            </div>
+            <div class="subcontent">
+              <article>
+                <% if(item.author) { %>
+                  <% if(item.author.length)
+                    theauthor = item.author.pop();
+                    %>
+                  <header>
+                    <% if(theauthor.thumbnail && theauthor.thumbnail.length) { %>
+                      <img src="<%=theauthor.thumbnail[0].contentURL%>" alt="Author's picture" />
+                    <% } %>
+                    <% if(theauthor.url) { %>
+                      <span class="author">By <a target="_blank" href="<%=theauthor.url%>"><%=theauthor.name%></a></span>
+                    <% } else { %>
+                      <span class="author">By <%=theauthor.name%></span>
+                    <% } %>
+                    <%
+                      thedate = item.dateCreated || item.datePublished; 
+                      if(thedate) { %>
+                      <br /><span class="date">Posted on <%=thedate.split('T')[0].split('-').join('/')%></span>
+                    <% } %>
+                  </header>
+                <% } %>
+                <% if(item.description) { %>
+                  <section>
+                    <%=item.description%>
+                  </section>
+                <% } %>
+              </article>
+            </div>
           </div>
         </div>
-      </div>
     </script>
 
   </body>

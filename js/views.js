@@ -200,6 +200,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       initialize: function(opt) {
         var self = this;
         this.$parent = opt.$parent;
+        self.scrollable = true;
         //this.$el = this.$parent;
         this.template = $('#image-template').html();
         //this.scrollable = opt.opt.scrollable;
@@ -220,6 +221,9 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         var $html = $(html);
         var $theimg = $('<img src="'+self.model.get('contentURL')+'" />');
         self.$parent.append(html);
+        
+        $('.scrollwrapper', self.$parent).attr('id', 'scroll-'+self.model.get('guid'));
+        
         $('.maincontent', self.$parent).append($theimg);
         $('.innerContainer', self.$parent).css({opacity: 0});
         $theimg.on('load', function() {
@@ -228,6 +232,21 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             $('.innerContainer', self.$parent).anim({opacity: 1}, 0.4, 'ease-in-out');
           else
             $('.innerContainer', self.$parent).animate({opacity: 1}, 400);
+
+          setTimeout(function() {
+            if(self.scrollable) {
+              if(!self.theScroller && Joshfire.framework.adapter != 'browser' && !Modernizr.overflowscrolling) {
+                self.theScroller = new iScroll('scroll-'+self.model.get('guid'), {
+                  hScroll: false,
+                  scrollbarClass: 'contentScroll'
+                });
+                
+                setTimeout(function() {
+                  self.theScroller.refresh();
+                }, 200);
+              }
+            }
+          }, 400);
         });
       }
 
@@ -269,6 +288,20 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         $('img', $html).hide();
         self.$el.append(html);
         self.$parent.append(self.$el);
+        setTimeout(function() {
+          if(self.scrollable) {
+            if(!self.theScroller && Joshfire.framework.adapter != 'browser' && !Modernizr.overflowscrolling) {
+              self.theScroller = new iScroll('scroll-'+self.model.get('guid'), {
+                hScroll: false,
+                scrollbarClass: 'contentScroll'
+              });
+              
+              setTimeout(function() {
+                self.theScroller.refresh();
+              }, 200);
+            }
+          }
+        }, 800);
         return;
       }
       
@@ -349,21 +382,19 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           $('.blogpaneInnerContainer', self.$el).animate({opacity: 1}, 400);
           $('a[rel=nofollow]', self.$el).remove();
 
-        }, 800);
-
-        /*
-        if(self.scrollable) {
-          if(!self.theScroller) {
-            self.theScroller = new iScroll('scroll-'+self.model.get('guid'), {
-              hScroll: false,
-              scrollbarClass: 'contentScroll'
-            });
+          if(self.scrollable) {
+            if(!self.theScroller && Joshfire.framework.adapter != 'browser' && !Modernizr.overflowscrolling) {
+              self.theScroller = new iScroll('scroll-'+self.model.get('guid'), {
+                hScroll: false,
+                scrollbarClass: 'contentScroll'
+              });
+              
+              setTimeout(function() {
+                self.theScroller.refresh();
+              }, 200);
+            }
           }
-          setTimeout(function() {
-            self.theScroller.refresh();
-          }, 800);
-        }
-        */
+        }, 800);
       },
 
 
@@ -554,6 +585,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       listContainer: '<div class="listPane"></div>',
       backButton: '<button class="back">back</button>',
 
+      scrollable: false,
       theScroller: null,
 
       events: {
@@ -565,6 +597,8 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         self.$el = $(self.el);
         self.$el.attr('id', opt.paneOptions.id);
         self.$el.attr('class', opt.paneOptions.classes);
+
+        self.scrollable = true;
 
         // Render the inner container (contains everything except the title.)
         self.innerContainer = $(self.innerContainer);
@@ -624,14 +658,22 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           $('.back', self.$el).on('touchend', self.goBack);
         }
 
-        /*
-        if(self.theScroller) {
-          // refresh scroller in a new "i can't believe it's not a thread" to let the dom refresh
-          setTimeout(function() {
-            self.theScroller.refresh();
-          }, 0);
+        if(self.scrollable) {
+          if(!self.theScroller && Joshfire.framework.adapter != 'browser' && !Modernizr.overflowscrolling) {
+            setTimeout(function() {
+
+              self.theScroller = new iScroll("sidebarlist", {
+                hScroll: false,
+                scrollbarClass: 'contentScroll'
+              });
+
+              var theel = $('#'+opt.paneOptions.id);
+              setTimeout(function() {
+                self.theScroller.refresh();
+              }, 200);
+            }, 800);
+          }
         }
-        */
       },
 
       goBack: function(e) {

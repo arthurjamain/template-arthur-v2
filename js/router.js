@@ -34,22 +34,24 @@ function(Router, dataManager, uiManager, views, onReady) {
       * dataManager.appTree in this context.
       **/
       onReady(function() {
-        self._loadData(function(tree) {
-          // Set Configurations
-          // Register all the datasources as backbone Models
-          if (Joshfire.factory) {
-            uiManager.setGlobalConfig(Joshfire.factory.config);
-            var tabs = Joshfire.factory.getDataSource('main');
-            if(tabs && typeof tabs.children != 'undefined') {
-              for(var k in tabs.children) {
-                // Set its true name
-                if(tabs.children.hasOwnProperty(k)) {
-                  tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
-                  tree.addBranch(tabs.children[k]);
+        $(function() {
+          self._loadData(function(tree) {
+            // Set Configurations
+            // Register all the datasources as backbone Models
+            if (Joshfire.factory) {
+              uiManager.setGlobalConfig(Joshfire.factory.config);
+              var tabs = Joshfire.factory.getDataSource('main');
+              if(tabs && typeof tabs.children != 'undefined') {
+                for(var k in tabs.children) {
+                  // Set its true name
+                  if(tabs.children.hasOwnProperty(k)) {
+                    tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
+                    tree.addBranch(tabs.children[k]);
+                  }
                 }
               }
             }
-          }
+          });
         });
       });
     },

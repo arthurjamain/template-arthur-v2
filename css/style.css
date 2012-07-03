@@ -263,6 +263,10 @@ blockquote {
 
 }
 
+#content .scrollwrapper {
+  height: 100%;
+}
+
 .mediaInnerContainer .loader {
    width: 100%;
    position: absolute;
@@ -282,7 +286,6 @@ blockquote {
 }
 
 #content .innerContainer {
-  height: 100%;
   width: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
