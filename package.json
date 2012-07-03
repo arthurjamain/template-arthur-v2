@@ -92,12 +92,12 @@
               "items": [
                 {
                   "type": "optionfieldset",
-                  "legend": "{{idx}}. {{value}}",
+                  "legend": "{{value}}",
                   "items": [
                     {
                       "key": "tabs[]",
                       "valueInLegend": true,
-                      "value": "New Tab"
+                      "value": "{{values.datasources.main[]}}"
                     },
                     {
                       "title": "Tab data source",
