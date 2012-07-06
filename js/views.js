@@ -441,6 +441,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         // Render the panel
         $('#'+opt.paneOptions.container).append(self.$el);
         self.$el.hide();
+        
         //Generate the data list and its items
         self.child = new views.mysteryList({
           // this selects the kind of view to create as

@@ -99,12 +99,18 @@ function(Router, dataManager, uiManager, views, onReady) {
         var data = dataManager.appTree;
 
         if (self.firstLaunch) {
+          var ntabs = Joshfire.factory.getDataSource('main').children.length;
+          var listClasses = '';
+
+          if(ntabs <= 10)
+            listClasses += 'bigger ';
 
           self.firstLaunch = false;
           var t = uiManager.setContentView(data, {
             container: 'content',
             id: 'contentRoot',
             listId: 'tableofcontent',
+            listClasses: listClasses,
             itemType: 'home'
           });
           if(Modernizr.csstransforms3d) {
