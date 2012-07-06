@@ -523,7 +523,7 @@ blockquote {
   display: block;
   width: 59px;
   height: 145px;
-  background: transparent url('../img/btn-back-home-small-red.png') no-repeat top left;
+  background: transparent url('../img/btn-back-home-small-blue.png') no-repeat top left;
   margin: 0;
   background-size: 59px 145px;
   -moz-background-size: 59px 145px;
@@ -550,7 +550,7 @@ blockquote {
   min-width:180px;
   margin-top: 10px;
   /** 8ca6c3 **/
-  color: #ff2b06;
+  color: #8CA6C3;
   font-size: 21px;
   font-weight: normal;
 }
@@ -599,7 +599,7 @@ blockquote {
   width: 100%;
   border-bottom: 1px solid #272626;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  background: transparent url('../img/img-arrow-title-small-red.png') no-repeat -60px center;
+  background: transparent url('../img/img-arrow-title-small-blue.png') no-repeat -60px center;
   -webkit-transition: background-position 0.4s;
   -moz-transition: background-position 0.4s;
   background-size: 60px 68px;
@@ -706,18 +706,6 @@ blockquote {
   height: 100%;
 }
 
-#contentRoot #tableofcontent li{
-  position: absolute;
-  width: 10% !important;
-  height: 25%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: table;
-  overflow: hidden;
-}
-
 #contentRoot #tableofcontent a,
 .video-corp a {
   width: 100%;
@@ -756,7 +744,7 @@ blockquote {
   font-size: 14px;
   word-wrap: break-word;
   max-width: 80px;
-  color: #ff2b06;
+  color: #8CA6C3;
 }
 
 #content .mediacontainer iframe {
@@ -914,9 +902,22 @@ blockquote {
   -moz-transform: translate3d(0, -100%, 0);
 }
 
-#tableofcontent li {
+#contentRoot #tableofcontent li{
+  position: absolute;
+  width: 10% !important;
+  height: 25%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: table;
+  overflow: hidden;
   top: 25%;
   left: 40%;
+}
+
+#contentRoot #tableofcontent.small li {
+  
 }
 
 .anim3 #tableofcontent li:nth-child(1),

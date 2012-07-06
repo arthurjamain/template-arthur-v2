@@ -514,7 +514,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         if(Joshfire.factory && Joshfire.factory.config)
           theconf = Joshfire.factory.config.template.options.introanim;
         
-        if(Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && Joshfire.factory.config.template.options.introanim && Modernizr.csstransforms3d) {
+        if(theconf && Modernizr.csstransforms3d) {
           self.$el.show().addClass('shown');
           $('#tableofcontent').show();
           self.videoEnded();
@@ -523,7 +523,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           self.$el.show().addClass('shown').addClass('anim');
           $('#tableofcontent').show();
           var time = 0;
-          if(!Joshfire.factory.config.template.options.introanim) {
+          if(!theconf) {
             setTimeout(function(e) {
               self.CVideoEnded(e);
             }, 1400);
@@ -549,7 +549,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
               $('#content').addClass('scattered');
             });
           }, 100);
-        }, 0);
+        }, 600);
       },
 
       CVideoEnded: function() {
@@ -637,7 +637,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
               * This hack corrects Flickr's terrible file
               * name format
               **/
-              if(model.get('@type') == 'ImageObject' && model.get('url').indexOf('flickr') > 0) {
+              if(model.get('@type') == 'ImageObject' && model.get('url') && model.get('url').indexOf('flickr') > 0) {
                 model.attributes.name = model.get('name').split('_').shift();
                 model.attributes.name = model.get('name').split(/(?=[A-Z])/).join(' ');
               }
