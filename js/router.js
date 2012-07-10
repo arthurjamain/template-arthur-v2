@@ -259,6 +259,7 @@ function(Router, dataManager, uiManager, views, onReady) {
         // to determine the direction of the slide
         var curPaneIndex = rootModel.collection.indexOf(rootModel),
             direction = '';
+
         direction = (curPaneIndex < self.previousContentIndex)?'bottom':'top';
 
         // If we previously were deeper
