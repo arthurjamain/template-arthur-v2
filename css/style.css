@@ -741,7 +741,6 @@ blockquote {
 
 #contentRoot #tableofcontent li/*:not(:first-child)*/ h3:first-line {
   font-weight: normal;
-  font-size: 14px;
   word-wrap: break-word;
   max-width: 80px;
   color: #8CA6C3;

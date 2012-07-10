@@ -171,7 +171,7 @@ function(Router, dataManager, uiManager, views, onReady) {
           classes: 'sidebarlist',
           itemType: 'sidebar'
         });
-
+        
         var firstChapter = col.first(),
             viewOpt = {
               container: 'content',
