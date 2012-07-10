@@ -43,6 +43,10 @@ function(Router, dataManager, uiManager, views, onReady) {
               var tabs = Joshfire.factory.getDataSource('main');
               if(tabs && typeof tabs.children != 'undefined') {
                 for(var k in tabs.children) {
+                  if(k > 19) {
+                    console.warn("The maximum quantity of 20 Datasources has been exceeded. Ignoring additional ones.");
+                    break;
+                  }
                   // Set its true name
                   if(tabs.children.hasOwnProperty(k)) {
                     tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];

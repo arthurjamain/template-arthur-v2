@@ -149,15 +149,30 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         }
 
         if(opt.data.get('@type') == 'VideoObject') {
-          var thevideo = $('iframe', self.$el).clone();
+          var thevideo = $('iframe, object', self.$el).clone();
           $('.maincontent').css({height: thevideo.attr('height')+'px'});
-          $('iframe', self.$el).remove();
-          $('.maincontent', self.$el).append('<div style="height:'+thevideo.attr('height')+'px;" class="loader"></div>');
+          $('iframe, object', self.$el).remove();
+          $('.maincontent', self.$el).append('<div style="height:'+(thevideo.attr('height')?thevideo.attr('height'):500)+'px;" class="loader"></div>');
             
           setTimeout(function() {
             thevideo.attr('width', $('#content').width() - 100);
             $('.maincontent', self.$el).append(thevideo);
-            $('iframe', self.$el).on('load', function() {
+            if($('iframe', self.$el).length) {
+              $('iframe', self.$el).on('load', function() {
+                if(Joshfire.framework.adapter == 'ios') {
+                  $('.maincontent .loader', self.$el).anim({opacity: 0}, 0.6, 'linear', function() {
+                    $(this).remove();
+                  });
+                }
+                else {
+                  $('.maincontent .loader', self.$el).animate({opacity: 0}, 600, function() {
+                    $(this).remove();
+                  });
+                }
+              });
+            }
+            else if($('object', self.$el).length) {
+              $('object', self.$el).parent().css({margin: '0 auto'});
               if(Joshfire.framework.adapter == 'ios') {
                 $('.maincontent .loader', self.$el).anim({opacity: 0}, 0.6, 'linear', function() {
                   $(this).remove();
@@ -168,7 +183,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
                   $(this).remove();
                 });
               }
-            });
+            }
           }, 800);
         }
 
