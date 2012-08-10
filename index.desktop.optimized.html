@@ -11,6 +11,27 @@
           rel="icon" 
           type="image/png" 
           href="http://example.com/myicon.png">
+    
+
+    <script type="text/javascript">
+    /** 
+    * webfont loader to fix webkit behaviour
+    * (waits for the font to load to render text)
+    **/
+      WebFontConfig = {
+        google: { families: [ 'Ubuntu', 'Cantarell' ] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
+    
     <script src="js/tap.js"></script>
     <script src="js/modernizr.js"></script>
     <script data-joshfire-bootstrap src="http://preview.joshfireapps.com/bootstrap/4f9aba6e1e4daf01000014d9/4fd11a3d5884d70100001ee9/desktop/"></script>

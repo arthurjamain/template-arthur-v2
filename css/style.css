@@ -181,6 +181,8 @@ blockquote {
   font-size: 30px;
   box-shadow: -3px 0px 5px rgba(0, 0, 0, 0.4);
   line-height: 37px;
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
 }
 
 #content .listpaneInnerContainer {
@@ -552,18 +554,21 @@ blockquote {
   overflow: hidden;
 }
 
+.wf-active #sidebar header h2 {
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 #sidebar header h2 {
   position: absolute;
   top: 0;
   left: 60px;
   right: 0;
-  padding: 0 30px;
+  padding: 0 20px;
   min-width:180px;
   margin-top: 10px;
-  /** 8ca6c3 **/
   color: #8CA6C3;
-  font-size: 21px;
-  font-weight: normal;
+  font-size: 28px;
+  font-weight: 400;
 }
 
 #sidebar header .curChapter {
@@ -668,6 +673,10 @@ blockquote {
   height: 100px;
 }
 
+.wf-active #sidebar .list h3 {
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 #sidebar .list h3 {
   color: #FFF;
   font-family: "Helvetica", Arial, sans-serif;
@@ -712,6 +721,10 @@ blockquote {
   -moz-background-size: 50% 50%;
 }
 
+.wf-active #contentRoot .listPane h1 {
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 #contentRoot .listPane h1 {
   margin: 0;
   font-size: 80px;
@@ -728,6 +741,8 @@ blockquote {
   max-width: 100%;
   overflow: hidden;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 -1px 0 #000;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
 }
 
 #contentRoot .listpaneInnerContainer {
@@ -791,6 +806,11 @@ blockquote {
   z-index: -1;
 }
 
+.wf-active #contentRoot #tableofcontent h3,
+.wf-active .video-corp h3 {
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 #contentRoot #tableofcontent h3,
 .video-corp h3 {
   color: #fff;
@@ -805,6 +825,7 @@ blockquote {
   right: 0;
   font-weight: normal;
   -webkit-transform: translate3d(0, 0, 0);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 #contentRoot .video-corp .video-icon {
@@ -817,10 +838,6 @@ blockquote {
   margin: 0px auto 10px;
 }
 
-#contentRoot #tableofcontent li/*:not(:first-child)*/ h3:first-line {
-  font-weight: normal;
-  word-wrap: break-word;
-}
 
 #content .mediacontainer iframe {
   margin: 0 auto;
