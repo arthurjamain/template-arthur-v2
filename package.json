@@ -1,7 +1,7 @@
 {
   "name": "arthur",
   "fullName": "Arthur",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A generic-purpose animated template letting you display most of the datasources using a more hierarchical approach.",
   "keywords": [
     "generic",
