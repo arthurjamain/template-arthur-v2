@@ -5,8 +5,9 @@ define([
   'joshlib!ui/item',
   'joshlib!view',
   'joshlib!ui/list',
-  'joshlib!ui/factorymedia'],
-function($, _, UIelement, UIItem, View, List, FactoryMedia) {
+  'joshlib!ui/factorymedia',
+  'joshlib!utils/cookie'],
+function($, _, UIelement, UIItem, View, List, FactoryMedia, Cookie) {
 
   var views = {
     /**
@@ -38,8 +39,13 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
     sidebar: View.extend({
       el: '#sidebar',
       $el: $('#sidebar'),
+
       events: {
         'touchend .back': 'goBack'
+      },
+      initialize: function(opt) {
+        View.prototype.initialize.call(this, opt);
+        this.$('.playlistcontrols').bind('click', _.bind(this.setPlaylistMode, this));
       },
       setTitle: function(opt) {
         var self = this;
@@ -51,6 +57,35 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         // Always home anyway
         document.location.hash = '/view';
         return false;
+      },
+      setPlaylistControls: function(is) {
+        if(is) {
+          this.$('.playlistcontrols').show();
+        }
+        else {
+          this.$('.playlistcontrols').hide();
+        }
+        //Always off when first called
+        Cookie('playlist', 0);
+        this.$('.playlistcontrols .toggleplaylist').text('Off');
+      },
+      setPlaylistMode: function(e, manual) {
+        var active = Cookie('playlist')?parseInt(Cookie('playlist'), 10):false;
+        if(!active) {
+          Cookie('playlist', 1);
+          this.$('.playlistcontrols .toggleplaylist').text('On');
+        }
+        else {
+          Cookie('playlist', 0);
+          this.$('.playlistcontrols .toggleplaylist').text('Off');
+        }
+        return false;
+      },
+      setHomeButton:function(is) {
+        if(is) {
+          this.$('.back').hide();
+          this.$('h2').css({left: 0});
+        }
       }
     }),
 
@@ -137,7 +172,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           // Wait transition end
           setTimeout(function() {
             self.child.render();
-          }, 1000)
+          }, 1000);
         }
         else {
           self.child = new views.mysteryBlogPost({
@@ -149,6 +184,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         }
 
         if(opt.data.get('@type') == 'VideoObject') {
+
           var thevideo = $('iframe, object', self.$el).clone();
           $('.maincontent').css({height: thevideo.attr('height')+'px'});
           $('iframe, object', self.$el).remove();
@@ -162,11 +198,13 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
                 if(Joshfire.framework.adapter == 'ios') {
                   $('.maincontent .loader', self.$el).anim({opacity: 0}, 0.6, 'linear', function() {
                     $(this).remove();
+                    self.setPlaylistConfig(opt);
                   });
                 }
                 else {
                   $('.maincontent .loader', self.$el).animate({opacity: 0}, 600, function() {
                     $(this).remove();
+                    self.setPlaylistConfig(opt);
                   });
                 }
               });
@@ -191,6 +229,33 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           self.child.$el.prepend(self.backButton);
           $('.back', self.$el).bind('touchend', self.goBack);
         }
+      },
+
+      setPlaylistConfig: function(opt) {
+        var self = this;
+        /*
+        if(opt.data.attributes.config.db === 'dailymotion') {
+          var dmdoc = $('iframe', self.$el);
+          var dmbody = dmdoc[0].contentDocument.body;
+          var active = Cookie('playlist')?parseInt(Cookie('playlist'), 10):false;
+          
+          $('#startscreen', dmbody).bind('click', function() {
+            // Let DM's script do its business
+            setTimeout(function() {
+              var next = self.options.data.collection.getNextModel(self.options.data);
+              $('video', dmbody)[0].addEventListener('ended', function() {
+                var active = Cookie('playlist')?parseInt(Cookie('playlist'), 10):false;
+                if(active)
+                  document.location.hash = next.get('path');
+              });
+            }, 100);
+          });
+
+          if(active) {
+            $('#startscreen', dmbody).trigger('click');
+          }
+        }
+        */
       },
 
       goBack: function(e) {
@@ -343,18 +408,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         this.$el = $(this.el);
         this.scrollable = opt.opt.scrollable;
 
-        // Fix weird values sent by google ...
-        if(this.model.get('articleBody')) {
-          this.model.attributes.articleBody = this.model.get('articleBody').replace('src="//', 'src="http://');
-          this.model.attributes.articleBody = this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="');
-          
-          // Thanks, Huffpost's crappy encoding
-          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&copy;/gi, 'é');
-          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&nbsp;/gi, 'à');
-          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&sup1;/gi, 'ù');
-          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&uml;/gi, 'è');
-          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Acirc;&nbsp;/gi, '');
-        }
+        this.fixGoogleNews();
 
         // Add the title
         if (opt.opt.title) {
@@ -373,12 +427,27 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           }
         }
       },
+      /**
+      * Fixes weird values sent by google's feed.
+      **/
+      fixGoogleNews: function() {
+        if(this.model.get('articleBody')) {
+          this.model.attributes.articleBody = this.model.get('articleBody').replace('src="//', 'src="http://');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/href="/gi, 'target="_blank" href="');
+          
+          // Fixes HuffPost's encoding
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&copy;/gi, 'é');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&nbsp;/gi, 'à');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&sup1;/gi, 'ù');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Atilde;&uml;/gi, 'è');
+          this.model.attributes.articleBody = this.model.get('articleBody').replace(/&Acirc;&nbsp;/gi, '');
+        }
+      },
 
       generate: function(cb) {
         var self = this;
         cb(null, _.template(self.template, {title: self.titleEl, model: self.model, scrollId: 'scroll-' + self.model.get('guid')}));
       },
-
       setContent: function(html) {
         var self = this;
         var $html = $(html);
@@ -411,8 +480,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           }
         }, 800);
       },
-
-
       enhance: function() {
         var self = this;
         $('a[rel="nofollow"]', self.$el).remove();
@@ -424,17 +491,8 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       el: '<div></div>',
       $el: null,
       child: null,
-      innerContainer: '<div id="logo">' +
-                        '<div class="icon"></div>' +
-                        '<div class="spots"></div>' +
-                        '<div class="flare"></div>' +
-                        '<div class="flareicon"></div>' +
-                      '</div>' +
-                      '<div id="intropicture"></div>' +
-                      '<div id="introtext">' +
-                      '</div>' +
-                      '<div class="listpaneInnerContainer"></div>',
-      listContainer: '<div class="listPane"></div>',
+      innerContainer: '<div class="listpaneInnerContainer"></div>',
+      listContainer: '<div class="listPane"><h1>Arthur</h1></div>',
 
       initialize: function(opt) {
         var self = this;
@@ -444,13 +502,12 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
         // Render the inner container (contains everything except the title.)
         self.innerContainer = $(self.innerContainer);
-        //self.innerContainer.attr('id', 'scroll-'+opt.paneOptions.id);
-
+        
         // Render the list container
         self.listContainer = $(self.listContainer);
-        self.innerContainer.last().append(self.listContainer);
 
         // Fill the panel
+        self.innerContainer.append(self.listContainer);
         self.$el.append(self.innerContainer);
 
         // Render the panel
@@ -484,6 +541,12 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         // Hide the list at first
         $('#'+opt.paneOptions.listId).hide();
 
+        self.setConfig(opt);
+      },
+      /**
+      * Sets the properties given by the factory
+      **/
+      setConfig: function(opt) {
         if(Joshfire && Joshfire.factory) {
           // Set the background image.
           var bg = Joshfire.factory.config.template.options.backgroundurl;
@@ -504,53 +567,28 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
           }
         }
       },
+      /**
+      * Used at first launch to trigger
+      * the zoomingout & scattering animations.
+      **/
       showAnimated: function() {
         var self = this;
-        var theconf;
-        if(Joshfire.factory && Joshfire.factory.config)
-          theconf = Joshfire.factory.config.template.options.introanim;
         
-        if(Joshfire.factory && Joshfire.factory.config && Joshfire.factory.config.template.options && Joshfire.factory.config.template.options.introanim) {
-          self.$el.show().addClass('shown');
-          $('#tableofcontent').show();
-          self.videoEnded();
-        }
-        else {
-          self.$el.show().addClass('shown').addClass('anim');
-          $('#tableofcontent').show();
-          setTimeout(function(e) {
-            self.videoEnded(e);
-          }, 1400);
-        }
+        self.$el.show().addClass('shown');
+        $('#tableofcontent').show();
+        self.scatter();
+      
       },
-
       CShowAnimated: function() {
         var self = this;
-        var theconf;
-        if(Joshfire.factory && Joshfire.factory.config)
-          theconf = Joshfire.factory.config.template.options.introanim;
-        
-        if(theconf && Modernizr.csstransforms3d) {
-          self.$el.show().addClass('shown');
-          $('#tableofcontent').show();
-          self.videoEnded();
-        }
-        else {
-          self.$el.show().addClass('shown').addClass('anim');
-          $('#tableofcontent').show();
-          var time = 0;
-          if(!theconf) {
-            setTimeout(function(e) {
-              self.CVideoEnded(e);
-            }, 1400);
-          }
-          else {
-            self.CVideoEnded(null);
-          }
-        }
+
+        self.$el.show().addClass('shown');
+        $('#tableofcontent').show();
+        self.Cscatter();
+      
       },
 
-      videoEnded: function(e) {
+      scatter: function(e) {
         var self = this;
         $('#logo').remove();
         self.$el.addClass('anim2');
@@ -568,7 +606,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         }, 600);
       },
 
-      CVideoEnded: function() {
+      Cscatter: function() {
         var self = this;
         self.$el.removeClass('anim');
         $('#content').addClass('cscattered');
@@ -591,7 +629,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       render: function() {
         var self = this;
         self.el.src = self.model.get('contentURL');
-        $(self.el).css({width: '100%', height: '100%'})
+        $(self.el).css({width: '100%', height: '100%'});
         self.$parent.html(self.el);
       }
 
@@ -708,11 +746,13 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
       }
     }),
 
-    // a list representing a collection.
-    // It extends a class from the framework.
+    /**
+    * A list representing a collection.
+    * Used on homepage & sidebar.
+    **/
     mysteryList: List.extend({
 
-      // setContent is called by render(). It sets the content ...
+      // setContent is called by render().
       setContent: function(html) {
         $('ul', this.itemOptions.$parent).remove();
         var self = this,
@@ -723,6 +763,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
         * Only insert the first five elements right away.
         * Wait for the end of the animation to load the
         * rest of the list into the DOM.
+        * Only for sidebars...
         **/
         if(thelis.length > 5 && !theopt.homepage) {
           $('li', $html).remove();
@@ -745,7 +786,9 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
             }, 50);
           }, 800);
         }
-
+        /**
+        * Set backgrounds !
+        **/
         theopt.$parent.append($html);
         $('ul', theopt.$parent).attr('id', theopt.listId || '');
         $('ul', theopt.$parent).attr('class', theopt.listClasses || '');
@@ -794,7 +837,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
     // One list item in content
     mysteryItem: View.extend({
       template: '<li><a class="listitemlink" href="<%=model.get("path")%>"><h3><%=model.get("name")%></h3><% if(desc) {%><p><%=desc.get("description")%></p><%}%></a></li>',
-
+      
       initialize: function() {
         View.prototype.initialize.call(this);
       },
@@ -814,16 +857,54 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia) {
 
     // One list item in content
     mysteryHomeItem: View.extend({
-      template: '<li><a class="homelistitemlink" href="<%=model.get("path")%>"><h3><%=model.get("name")%></h3></a></li>',
-
+      template: '<li id="homeitem-<%=model.get("id")%>"><a class="homelistitemlink" href="<%=model.get("path")%>"><h3><%=model.get("name")%></h3></a></li>',
+      
       initialize: function() {
+        var self = this;
+
         View.prototype.initialize.call(this);
+        this.id = 'homeitem-'+this.model.get("id");
+
+        var setFirstChildrenImage = function(item) {
+          if(!self.coverImage) {
+              console.log(item);
+            if(item.get('image')) {
+              self.setImage(item.get('image').contentURL);
+              self.model.get('children').unbind('add', setFirstChildrenImage);
+            }
+          }
+        };
+
+        this.model.get('children').bind('add', setFirstChildrenImage);
+        
       },
 
       generate: function(cb) {
         // get its description children and show it
         var desc = this.model.get('children').getDescriptionPost();
         cb(null, _.template(this.template, {model: this.model, desc: desc}));
+      },
+
+      setImage: function(url) {
+        var self = this;
+        var img = new Image();
+        img.src = url;
+        img.onload = function() {
+          var bg = $('<div />')
+            .addClass('background')
+            .css({
+              background: 'transparent url('+url+') no-repeat top center',
+              backgroundSize: 'cover',
+              opacity: 0
+            });
+          
+          $('#'+self.id).append(bg);
+          if(Joshfire.framework.adapter == "ios")
+            $(bg).anim({opacity: 1}, 0.4, 'linear');
+          else
+            $(bg).animate({opacity: 1}, 400);
+          
+        };
       }
 
     }),

@@ -56,23 +56,22 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
         children: null,
         '@type': 'Thing',
         guid: null,
-        path: 0
+        path: 0,
+        config: null
       },
       firstLoading: false,
       initialize: function(data) {
         var self = this;
-
         this.set({
           id: data.ID || data.id,
           _id: data.ID || data.id,
           name: data.name,
           content: data.articleBody,
           slug: data.post_name,
-          children: new models.Elements,
+          children: new models.Elements(),
           path: ''
         });
-
-        this.set({id: this.cid})
+        this.set({id: this.cid});
         this.set({'guid': this.cid});
         this._find = data.find;
         // Set its absolute path property
@@ -95,7 +94,9 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
           
           for(var k in data.entries) {
             data.entries[k].path = self.get('path');
-            self.get('children').add(new models.Element(data.entries[k]));
+            var c = new models.Element(data.entries[k]);
+            c.set({config: self.get('config')});
+            self.get('children').add(c);
           }
 
           if(typeof self._onDataLoaded == 'function')
@@ -107,31 +108,13 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
 
       _find: null,
 
-      _onDataLoaded: null,
-
-      _populateChildren: function(children) {
-        for(var i in children) {
-          if(children.hasOwnProperty(i)) {
-            children[i].path = this.get('path');
-            this.get('children').add(new models.Element(children[i]));
-          }
-        }
-      },
-
-      _populateMedias: function(medias) {
-        for(var m in medias) {
-          if(medias.hasOwnProperty(m)) {
-            this.medias.add(new models.Media(medias[m]));
-          }
-        }
-      }
+      _onDataLoaded: null
     }),
 
     /**
     * A Collection of items
     **/
     Elements: Backbone.Collection.extend({
-
       getFirstChapter: function() {
         for(var i in this.models) {
 
@@ -150,6 +133,10 @@ define(['joshlib!vendor/backbone', 'js/views'], function(Backbone, views) {
           }
         }
         return false;
+      },
+
+      getNextModel: function(model) {
+        return this.models[this.indexOf(model) + 1];
       },
 
       getDescriptionPost: function() {

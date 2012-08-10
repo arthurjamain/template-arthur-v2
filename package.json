@@ -57,11 +57,6 @@
           "description": "A large background image that will fill the home screen.",
           "type": "string"
         },
-        "introanim": {
-          "title": "Intro Animation.",
-          "description": "Check to disable the intro animation which will be played on the application's first launch.",
-          "type": "checkbox"
-        },
         "tabs": {
           "title": "tabs",
           "type": "tabarray",
@@ -77,10 +72,7 @@
           "type": "fieldset",
           "legend": "Style",
           "items": [
-            "backgroundurl",
-            {
-              "key": "introanim"
-            }
+            "backgroundurl"
           ]
         },
         {

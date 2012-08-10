@@ -54,7 +54,6 @@ ol, ul {
 
 blockquote {
   background: #EEE;
-  font-weight: 12px;
   font-size: 14px;
   padding: 15px;
   border-radius: 5px;
@@ -282,6 +281,10 @@ blockquote {
   height: 100%;
 }
 
+.articleInnerContainer {
+  background: #F8F6F4!important;
+}
+
 .mediaInnerContainer .loader {
    width: 100%;
    position: absolute;
@@ -305,6 +308,7 @@ blockquote {
   height: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  box-shadow: inset 0 5px 5px -5px rgba(0, 0, 0, 0.6);
 }
 
 #content .innerContainer > * {
@@ -383,7 +387,14 @@ blockquote {
 
 #content .articleStatus .maincontent {
   line-height: 35px;
-  font-size: 20px;
+  background: #EEE;
+  font-size: 14px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.2);
+  color: #333;
+  text-shadow: 0 1px white;
+  margin: 50px;
 }
 
 #content .image {
@@ -572,6 +583,31 @@ blockquote {
   margin: 0;
 }
 
+#sidebar .playlistcontrols {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 30px;
+}
+
+#sidebar .playlistcontrols p {
+  margin: 0;
+  padding: 0;
+  color: #F8F6F4;
+  height: 100%;
+  float: left;
+  background: #8CA6C3;
+  border-top-left-radius: 10px;
+  padding: 6px 10px 0;
+  color: #444;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.4);
+  font-weight: bold;
+}
+
+#sidebar .playlistcontrols .toggleplaylist {
+  color: #444;
+}
+
 #sidebar .list {
   width: 287px;
   position: absolute;
@@ -661,6 +697,7 @@ blockquote {
   color: #FFF;
   margin: 0;
   min-width: 36px;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
 }
 
 #contentRoot {
@@ -670,6 +707,27 @@ blockquote {
 
 #contentRoot .listPane {
   overflow: visible;
+  background: #000 url('../img/img-background-sidebar.png') repeat top left;
+  background-size: 50% 50%;
+  -moz-background-size: 50% 50%;
+}
+
+#contentRoot .listPane h1 {
+  margin: 0;
+  font-size: 80px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: normal;
+  height: 150px;
+  line-height: 150px;
+  color: #8CA6C3;
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  overflow: hidden;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 -1px 0 #000;
 }
 
 #contentRoot .listpaneInnerContainer {
@@ -692,14 +750,11 @@ blockquote {
 }
 
 #tableofcontent {
-  margin: 0 !important;
-  border: 0 !important;
-  padding: 0 !important;
-  width: 100%;
-  height: 100%;
-  background: transparent url('../img/img-background-sidebar.png') repeat top left;
-  background-size: 50% 50%;
-  -moz-background-size: 50% 50%;
+  position: absolute;
+  top: 200px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 #contentRoot .listPane {
@@ -710,13 +765,30 @@ blockquote {
 .video-corp a {
   width: 100%;
   height: 100%;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
+  display: block;
+  text-align: left;
   padding: 0 10px;
   -webkit-transform: translate3d(0, 0, 0);
   word-wrap: break-word;
-  max-width: 80px;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#contentRoot #tableofcontent a:hover{
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#contentRoot #tableofcontent a:active{
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#contentRoot #tableofcontent .background,
+.video-corp .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 1px;
+  bottom: 0;
+  z-index: -1;
 }
 
 #contentRoot #tableofcontent h3,
@@ -725,7 +797,13 @@ blockquote {
   margin: 0;
   font-size: 16px;
   line-height: 20px;
-  max-width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 10px 5px 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-weight: normal;
   -webkit-transform: translate3d(0, 0, 0);
 }
 
@@ -742,8 +820,6 @@ blockquote {
 #contentRoot #tableofcontent li/*:not(:first-child)*/ h3:first-line {
   font-weight: normal;
   word-wrap: break-word;
-  max-width: 80px;
-  color: #8CA6C3;
 }
 
 #content .mediacontainer iframe {
@@ -773,6 +849,8 @@ blockquote {
 #content .maincontent {
   padding: 50px;
   position: relative;
+  background: #F8F6F4;
+  box-shadow: inset 0 5px 5px -5px rgba(0, 0, 0, 0.4);
 } 
 
 #content .maincontent audio {
@@ -783,7 +861,8 @@ blockquote {
   background: #E0E0E4;
   border-left: 1px solid #EEE;
   border-top: 1px solid #EEE;
-  box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 3px -2px 5px -2px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 3px -2px 5px -2px rgba(0, 0, 0, 0.4);
 }
 
 #content article section {
@@ -903,18 +982,22 @@ blockquote {
 
 #contentRoot #tableofcontent li{
   position: absolute;
-  width: 10% !important;
-  height: 25%;
   margin: 0;
   padding: 0;
   border: 0;
   background: rgba(0, 0, 0, 0.8);
-  display: table;
+  display: block;
   overflow: hidden;
   top: 25%;
-  left: 40%;
+  left: 50%;
+  margin-left: -75px;
+  box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.8);
+  border: 1px solid #000;
+  width: 150px;
+  height: 150px;
 }
 
+/*
 .anim3 #tableofcontent li:nth-child(1),
 .scattered #tableofcontent li:nth-child(1) {
   -webkit-transform: translate3d(-300%, -100%, 0);
@@ -1074,72 +1157,72 @@ blockquote {
   -moz-transform: translate3d(400%, 200%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
-
+*/
 /** Compatibility positioning **/
 
 .cscattered #tableofcontent li:nth-child(1) {
-  top: 0%;
-  left: 10%;
+  top: 0%!important;
+  left: 20%!important;
   z-index: 39;
 }
 
 .cscattered #tableofcontent li:nth-child(2) {
-  top: 0%;
-  left: 30%;
+  top: 0%!important;
+  left: 60%!important;
   z-index: 38;
 }
 
 .cscattered #tableofcontent li:nth-child(3) {
-  top: 0%;
-  left: 50%;
+  top: 25%!important;
+  left: 0%!important;
   z-index: 37;
 }
 
 .cscattered #tableofcontent li:nth-child(4) {
-  top: 0%;
-  left: 70%;
+  top: 25%!important;
+  left: 40%!important;
   z-index: 36;
 }
 
 .cscattered #tableofcontent li:nth-child(5) {
-  top: 0%;
-  left: 90%;
+  top: 25%!important;
+  left: 80%!important;
   z-index: 35;
 }
 
 .cscattered #tableofcontent li:nth-child(6) {
-  top: 25%;
-  left: 0%;
+  top: 50%!important;
+  left: 20%!important;
   z-index: 35;
 }
 
 .cscattered #tableofcontent li:nth-child(7) {
-  top: 25%;
-  left: 20%;
+  top: 50%!important;
+  left: 60%!important;
   z-index: 35;
 }
 
 .cscattered #tableofcontent li:nth-child(8) {
-  top: 25%;
-  left: 40%;
+  top: 75%!important;
+  left: 0%!important;
   z-index: 35;
 }
 
 .cscattered #tableofcontent li:nth-child(9) {
-  top: 25%;
-  left: 60%;
+  top: 75%!important;
+  left: 40%!important;
   z-index: 31;
 }
 
 .cscattered #tableofcontent li:nth-child(10) {
-  top: 25%;
-  left: 80%;
+  top: 75%!important;
+  left: 80%!important;
   z-index: 30;
 }
 
 .cscattered #tableofcontent li:nth-child(11) {
-  top: 50%;
-  left: 10%;
+  top: 50%!important;
+  left: 10%!important;
   z-index: 29;
 }
 
@@ -1199,9 +1282,261 @@ blockquote {
 
 
 #contentRoot #tableofcontent.bigger li {
-  width: 20%!important;
+
 }
 
+/**
+* Here comes the positioning shitstorm. Whoever you are, sorry.
+**/
+
+#root.config-2 .anim3 li:nth-child(1),
+#root.config-2 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-65%, 0, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+#root.config-2 .anim3 li:nth-child(2),
+#root.config-2 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(65%, 0, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+
+#root.config-3 .anim3 li:nth-child(1),
+#root.config-3 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-130%, 0, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+#root.config-3 .anim3 li:nth-child(2),
+#root.config-3 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+#root.config-3 .anim3 li:nth-child(3),
+#root.config-3 .scattered li:nth-child(3) {
+  -webkit-transform: translate3d(130%, 0%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+
+#root.config-4 .anim3 li:nth-child(1),
+#root.config-4 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-65%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+#root.config-4 .anim3 li:nth-child(2),
+#root.config-4 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(65%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+#root.config-4 .anim3 li:nth-child(3),
+#root.config-4 .scattered li:nth-child(3) {
+  -webkit-transform: translate3d(-65%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+#root.config-4 .anim3 li:nth-child(4),
+#root.config-4 .scattered li:nth-child(4) {
+  -webkit-transform: translate3d(65%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+
+
+#root.config-5 .anim3 li:nth-child(1),
+#root.config-5 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-135%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-5 .anim3 li:nth-child(2),
+#root.config-5 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(0%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-5 .anim3 li:nth-child(3),
+#root.config-5 .scattered li:nth-child(3) {
+  -webkit-transform: translate3d(135%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-5 .anim3 li:nth-child(4),
+#root.config-5 .scattered li:nth-child(4) {
+  -webkit-transform: translate3d(-65%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-5 .anim3 li:nth-child(5),
+#root.config-5 .scattered li:nth-child(5) {
+  -webkit-transform: translate3d(65%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+
+#root.config-6 .anim3 li:nth-child(1),
+#root.config-6 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-135%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-6 .anim3 li:nth-child(2),
+#root.config-6 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(0%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-6 .anim3 li:nth-child(3),
+#root.config-6 .scattered li:nth-child(3) {
+  -webkit-transform: translate3d(135%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-6 .anim3 li:nth-child(4),
+#root.config-6 .scattered li:nth-child(4) {
+  -webkit-transform: translate3d(-135%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-6 .anim3 li:nth-child(5),
+#root.config-6 .scattered li:nth-child(5) {
+  -webkit-transform: translate3d(0%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-6 .anim3 li:nth-child(6),
+#root.config-6 .scattered li:nth-child(6) {
+  -webkit-transform: translate3d(135%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+
+#root.config-7 .anim3 li:nth-child(1),
+#root.config-7 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-200%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-7 .anim3 li:nth-child(2),
+#root.config-7 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(-65%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-7 .anim3 li:nth-child(3),
+#root.config-7 .scattered li:nth-child(3) {
+  -webkit-transform: translate3d(65%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-7 .anim3 li:nth-child(4),
+#root.config-7 .scattered li:nth-child(4) {
+  -webkit-transform: translate3d(200%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-7 .anim3 li:nth-child(5),
+#root.config-7 .scattered li:nth-child(5) {
+  -webkit-transform: translate3d(-135%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-7 .anim3 li:nth-child(6),
+#root.config-7 .scattered li:nth-child(6) {
+  -webkit-transform: translate3d(0%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-7 .anim3 li:nth-child(7),
+#root.config-7 .scattered li:nth-child(7) {
+  -webkit-transform: translate3d(135%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+
+#root.config-8 .anim3 li:nth-child(1),
+#root.config-8 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-200%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-8 .anim3 li:nth-child(2),
+#root.config-8 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(-65%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-8 .anim3 li:nth-child(3),
+#root.config-8 .scattered li:nth-child(3) {
+  -webkit-transform: translate3d(65%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-8 .anim3 li:nth-child(4),
+#root.config-8 .scattered li:nth-child(4) {
+  -webkit-transform: translate3d(200%, -65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-8 .anim3 li:nth-child(5),
+#root.config-8 .scattered li:nth-child(5) {
+  -webkit-transform: translate3d(-200%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-8 .anim3 li:nth-child(6),
+#root.config-8 .scattered li:nth-child(6) {
+  -webkit-transform: translate3d(-65%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-8 .anim3 li:nth-child(7),
+#root.config-8 .scattered li:nth-child(7) {
+  -webkit-transform: translate3d(65%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-8 .anim3 li:nth-child(8),
+#root.config-8 .scattered li:nth-child(8) {
+  -webkit-transform: translate3d(200%, 65%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+
+
+#root.config-9 #tableofcontent {
+  top: 250px;
+}
+
+#root.config-9 .anim3 li:nth-child(1),
+#root.config-9 .scattered li:nth-child(1) {
+  -webkit-transform: translate3d(-120%, -120%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(2),
+#root.config-9 .scattered li:nth-child(2) {
+  -webkit-transform: translate3d(0%, -120%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(3),
+#root.config-9 .scattered li:nth-child(3) {
+  -webkit-transform: translate3d(120%, -120%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(4),
+#root.config-9 .scattered li:nth-child(4) {
+  -webkit-transform: translate3d(-120%, 0, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(5),
+#root.config-9 .scattered li:nth-child(5) {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(6),
+#root.config-9 .scattered li:nth-child(6) {
+  -webkit-transform: translate3d(120%, 0, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(7),
+#root.config-9 .scattered li:nth-child(7) {
+  -webkit-transform: translate3d(-120%, 120%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(8),
+#root.config-9 .scattered li:nth-child(8) {
+  -webkit-transform: translate3d(0, 120%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+#root.config-9 .anim3 li:nth-child(9),
+#root.config-9 .scattered li:nth-child(9) {
+  -webkit-transform: translate3d(120%, 120%, 0);
+  -webkit-transition: -webkit-transform 0.5s;
+}
+
+/*
 .anim3 #tableofcontent.bigger li:nth-child(1),
 .scattered #tableofcontent.bigger li:nth-child(1) {
   -webkit-transform: translate3d(-100%, -100%, 0);
@@ -1209,7 +1544,7 @@ blockquote {
   -moz-transform: translate3d(-100%, -100%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
-
+/*
 .anim3 #tableofcontent.bigger li:nth-child(2),
 .scattered #tableofcontent.bigger li:nth-child(2) {
   -webkit-transform: translate3d(100%, -100%, 0);
@@ -1281,7 +1616,7 @@ blockquote {
   -moz-transform: translate3d(200%, 200%, 0);
   -moz-transition: -moz-transform 0.5s;
 }
-
+*/
 #logo,
 #intropicture,
 #introtext {

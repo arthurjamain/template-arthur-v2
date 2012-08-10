@@ -108,8 +108,16 @@ function($, _, views) {
         });
 
         this.sidebarPane.show();
+        this.staticViews.app.sidebar.setHomeButton(opt.singleCol);
         this.staticViews.app.sidebar.setTitle({'title': rootModel.get('name'), 'id': rootModel.get('guid')});
-
+        /*
+        if(rootModel.get('config').db === 'dailymotion') {
+          this.staticViews.app.sidebar.setPlaylistControls(true);
+        }
+        else {
+          this.staticViews.app.sidebar.setPlaylistControls(false);
+        }
+        */
         return this.sidebarPane;
       }
 
@@ -229,11 +237,11 @@ function($, _, views) {
     },
 
     /**
-    * 
+    * Sets global factory configs
     **/
     setGlobalConfig: function(conf) {
       if(conf && conf.app && conf.template) {
-        if(conf.app.name) 
+        if(conf.app.name)
           document.title = conf.app.name;
         if(conf.app.icon) {
           $('#thefavicon').attr('href', conf.app.icon.contentURL);
@@ -243,7 +251,7 @@ function($, _, views) {
         if(conf.template.options.backgroundurl) {
           setTimeout(function() {
             $('#tableofcontent').css({
-              background: 'transparent url('+conf.template.options.backgroundurl+') no-repeat top left', 
+              background: 'transparent url('+conf.template.options.backgroundurl+') no-repeat top left',
               backgroundSize: 'cover'
             });
           });

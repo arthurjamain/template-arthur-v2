@@ -42,15 +42,26 @@ function(Router, dataManager, uiManager, views, onReady) {
               uiManager.setGlobalConfig(Joshfire.factory.config);
               var tabs = Joshfire.factory.getDataSource('main');
               if(tabs && typeof tabs.children != 'undefined') {
-                for(var k in tabs.children) {
-                  if(k > 19) {
-                    console.warn("The maximum quantity of 20 Datasources has been exceeded. Ignoring additional ones.");
-                    break;
-                  }
-                  // Set its true name
-                  if(tabs.children.hasOwnProperty(k)) {
-                    tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
-                    tree.addBranch(tabs.children[k]);
+                if(tabs.children.length == 1) {
+                  tabs.children[0].name = Joshfire.factory.config.template.options.tabs[0];
+                  tree.addBranch(tabs.children[0]);
+                  
+                  self.firstLaunch = false;
+                  self.singleCol = true;
+                  self.navigate('#/view/'+tree.get('children').first().get('id'));
+                }
+                else {
+                  $('#root').addClass('config-'+tabs.children.length);
+                  for(var k in tabs.children) {
+                    if(k > 19) {
+                      console.warn("The maximum quantity of 20 Datasources has been exceeded. Ignoring additional ones.");
+                      break;
+                    }
+                    // Set its true name
+                    if(tabs.children.hasOwnProperty(k)) {
+                      tabs.children[k].name = Joshfire.factory.config.template.options.tabs[k];
+                      tree.addBranch(tabs.children[k]);
+                    }
                   }
                 }
               }
@@ -97,6 +108,10 @@ function(Router, dataManager, uiManager, views, onReady) {
     * Home Route -> animation, mozaic
     **/
     viewHome: function() {
+      if(this.singleCol) {
+        this.navigate('#/view/'+dataManager.appTree.get('children').first().get('id'), false);
+        return;
+      }
       var self = this;
       self._onDataLoaded = function() {
         
@@ -121,7 +136,7 @@ function(Router, dataManager, uiManager, views, onReady) {
             uiManager.getContentView('contentRoot').showAnimated();
           }
           else {
-            uiManager.getContentView('contentRoot').CShowAnimated(); 
+            uiManager.getContentView('contentRoot').CShowAnimated();
           }
 
         } else {
@@ -173,7 +188,8 @@ function(Router, dataManager, uiManager, views, onReady) {
           container: 'sidebar .list',
           id: sidebarid,
           classes: 'sidebarlist',
-          itemType: 'sidebar'
+          itemType: 'sidebar',
+          singleCol: self.singleCol
         });
         
         var firstChapter = col.first(),
@@ -184,7 +200,7 @@ function(Router, dataManager, uiManager, views, onReady) {
               showDescription: true,
               titleType: 'big',
               scrollable: true
-            }
+            };
 
         if(col.models[0].get('@type') == 'ExternalResource') {
           viewOpt.iframe = true;
