@@ -39,7 +39,6 @@ function(Router, dataManager, uiManager, views, onReady) {
             // Set Configurations
             // Register all the datasources as backbone Models
             if (Joshfire.factory) {
-              uiManager.setGlobalConfig(Joshfire.factory.config);
               var tabs = Joshfire.factory.getDataSource('main');
               if(tabs && typeof tabs.children != 'undefined') {
                 if(tabs.children.length == 1) {
@@ -114,7 +113,7 @@ function(Router, dataManager, uiManager, views, onReady) {
       }
       var self = this;
       self._onDataLoaded = function() {
-        
+
         var data = dataManager.appTree;
 
         if (self.firstLaunch) {
@@ -132,6 +131,9 @@ function(Router, dataManager, uiManager, views, onReady) {
             listClasses: listClasses,
             itemType: 'home'
           });
+
+          uiManager.setGlobalConfig(Joshfire.factory.config);
+        
           if(Modernizr.csstransforms3d) {
             uiManager.getContentView('contentRoot').showAnimated();
           }

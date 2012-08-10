@@ -492,7 +492,7 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia, Cookie) {
       $el: null,
       child: null,
       innerContainer: '<div class="listpaneInnerContainer"></div>',
-      listContainer: '<div class="listPane"><h1>Arthur</h1></div>',
+      listContainer: '<div class="listPane"><h1 id="appNameHeader"></h1></div>',
 
       initialize: function(opt) {
         var self = this;
@@ -867,7 +867,6 @@ function($, _, UIelement, UIItem, View, List, FactoryMedia, Cookie) {
 
         var setFirstChildrenImage = function(item) {
           if(!self.coverImage) {
-              console.log(item);
             if(item.get('image')) {
               self.setImage(item.get('image').contentURL);
               self.model.get('children').unbind('add', setFirstChildrenImage);
